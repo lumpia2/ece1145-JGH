@@ -42,7 +42,7 @@ public class GameImpl implements Game {
   public Player getWinner() { return null; }
   public int getAge() { return 0; }
   public boolean moveUnit( Position from, Position to ) {
-    return false;
+    return true;
   }
   public void endOfTurn() {
     if (currentPlayer == Player.RED) { currentPlayer = Player.BLUE; }
