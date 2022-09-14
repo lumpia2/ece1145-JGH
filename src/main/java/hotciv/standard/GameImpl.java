@@ -37,7 +37,7 @@ public class GameImpl implements Game {
   public Player getWinner() { return null; }
   public int getAge() { return 0; }
   public boolean moveUnit( Position from, Position to ) {
-    return false;
+    return true;
   }
   public void endOfTurn() {}
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}

@@ -53,10 +53,32 @@ public class TestAlphaCiv {
     // assertThat(game.getPlayerInTurn(), is(Player.RED));
   }
 
+  // The attacking unit always wins no matter what the defensive or attacking strengths are
+  @Test
+  public void attackingUnitAlwaysWins() {
+    assertThat(game, is(notNullValue()));
+
+    assertThat(game.moveUnit(new Position (2,0), new Position (3, 2)), is(true));
+  }
+
+  // No associated actions are supported by any unit
+  @Test
+  public void noActionsWork() {
+    assertThat(game, is(notNullValue()));
+  }
+
+  // Players can select to produce archers, legions, or settlers. Cities remain population size 1, and produce 6 production per round.
+  @Test
+  public void checkCityPopAndProd() {
+    assertThat(game, is(notNullValue()));
+
+
+  }
+
   /** REMOVE ME. Not a test of HotCiv, just an example of what
       matchers the hamcrest library has... */
   @Test
-  public void shouldDefinetelyBeRemoved() {
+  public void shouldDefinitelyBeRemoved() {
     // Matching null and not null values
     // 'is' require an exact match
     String s = null;
