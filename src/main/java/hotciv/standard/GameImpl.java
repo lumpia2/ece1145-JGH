@@ -1,6 +1,7 @@
 package hotciv.standard;
 
 import hotciv.framework.*;
+import java.util.HashMap;
 
 /** Skeleton implementation of HotCiv.
  
@@ -30,17 +31,46 @@ import hotciv.framework.*;
 */
 
 public class GameImpl implements Game {
-  public Tile getTileAt( Position p ) { return null; }
-  public Unit getUnitAt( Position p ) { return null; }
+  private HashMap<Position, TileImpl> tiles = new HashMap<>();
+  private HashMap<Position, UnitImpl> units = new HashMap<>();
+  private Player currentPlayer = Player.RED;
+
+  public Tile getTileAt( Position p ) { return tiles.get(p); }
+  public Unit getUnitAt( Position p ) { return units.get(p); }
   public City getCityAt( Position p ) { return null; }
-  public Player getPlayerInTurn() { return null; }
+  public Player getPlayerInTurn() { return currentPlayer; }
   public Player getWinner() { return null; }
   public int getAge() { return 0; }
   public boolean moveUnit( Position from, Position to ) {
     return true;
   }
-  public void endOfTurn() {}
+  public void endOfTurn() {
+    if (currentPlayer == Player.RED) { currentPlayer = Player.BLUE; }
+    else if (currentPlayer == Player.BLUE) { currentPlayer = Player.RED; }
+  }
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
   public void changeProductionInCityAt( Position p, String unitType ) {}
   public void performUnitActionAt( Position p ) {}
+
+  public void createMap() {
+    String tileType = GameConstants.PLAINS;
+
+    for (int i = 0; i < GameConstants.WORLDSIZE; i++) {
+      for (int j = 0; j < GameConstants.WORLDSIZE; j++) {
+        if (i == 1 && j == 0) {
+          tileType = GameConstants.OCEANS;
+        } else if (i == 0 && j == 1) {
+          tileType = GameConstants.HILLS;
+        } else if (i == 2 && j == 2) {
+          tileType = GameConstants.MOUNTAINS;
+        }
+
+        if (i==2 && j==0) { units.put(new Position(i,j), new UnitImpl(GameConstants.ARCHER, Player.RED)); }
+        if (i==3 && j==2) { units.put(new Position(i,j), new UnitImpl(GameConstants.LEGION, Player.BLUE)); }
+        if (i==4 && j==3) { units.put(new Position(i,j), new UnitImpl(GameConstants.SETTLER, Player.RED)); }
+
+        tiles.put(new Position(i, j), new TileImpl(tileType));
+      }
+    }
+  }
 }

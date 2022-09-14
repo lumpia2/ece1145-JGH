@@ -43,61 +43,48 @@ public class TestAlphaCiv {
   @Before
   public void setUp() {
     game = new GameImpl();
+    game.createMap();
+  }
+
+  @Test
+  public void oceanAt_1_0() {
+    assertEquals(GameConstants.OCEANS, game.getTileAt(new Position(1,0)).getTypeString());
+  }
+
+  @Test
+  public void hillsAt_0_1() {
+    assertEquals(GameConstants.HILLS, game.getTileAt(new Position(0,1)).getTypeString());
+  }
+
+  @Test
+  public void mountainsAt_2_2() {
+    assertEquals(GameConstants.MOUNTAINS, game.getTileAt(new Position(2, 2)).getTypeString());
   }
 
   // FRS p. 455 states that 'Red is the first player to take a turn'.
   @Test
   public void shouldBeRedAsStartingPlayer() {
     assertThat(game, is(notNullValue()));
-    // TODO: reenable the assert below to get started...
-    // assertThat(game.getPlayerInTurn(), is(Player.RED));
+    assertThat(game.getPlayerInTurn(), is(Player.RED));
   }
 
-  // The attacking unit always wins no matter what the defensive or attacking strengths are
   @Test
-  public void attackingUnitAlwaysWins() {
-    assertThat(game, is(notNullValue()));
-
-    assertThat(game.moveUnit(new Position (2,0), new Position (3, 2)), is(true));
+  public void redArcherAt_2_0() {
+    assertEquals(GameConstants.ARCHER, game.getUnitAt(new Position(2,0)).getTypeString());
   }
 
-  // No associated actions are supported by any unit
   @Test
-  public void noActionsWork() {
-    assertThat(game, is(notNullValue()));
+  public void redSettlerAt_4_3() {
+    assertEquals(GameConstants.SETTLER, game.getUnitAt(new Position(4,3)).getTypeString());
   }
 
-  // Players can select to produce archers, legions, or settlers. Cities remain population size 1, and produce 6 production per round.
   @Test
-  public void checkCityPopAndProd() {
-    assertThat(game, is(notNullValue()));
-
-
+  public void nextPlayerBlue() {
+    game.endOfTurn();
+    assertThat(game.getPlayerInTurn(), is(Player.BLUE));
   }
 
-  /** REMOVE ME. Not a test of HotCiv, just an example of what
-      matchers the hamcrest library has... */
-  @Test
-  public void shouldDefinitelyBeRemoved() {
-    // Matching null and not null values
-    // 'is' require an exact match
-    String s = null;
-    assertThat(s, is(nullValue()));
-    s = "Ok";
-    assertThat(s, is(notNullValue()));
-    assertThat(s, is("Ok"));
-
-    // If you only validate substrings, use containsString
-    assertThat("This is a dummy test", containsString("dummy"));
-
-    // Match contents of Lists
-    List<String> l = new ArrayList<String>();
-    l.add("Bimse");
-    l.add("Bumse");
-    // Note - ordering is ignored when matching using hasItems
-    assertThat(l, hasItems(new String[] {"Bumse","Bimse"}));
-
-    // Matchers may be combined, like is-not
-    assertThat(l.get(0), is(not("Bumse")));
+  public void blueLegionAt_3_2() {
+    assertEquals(GameConstants.LEGION, game.getUnitAt(new Position(3,2)).getTypeString());
   }
 }
