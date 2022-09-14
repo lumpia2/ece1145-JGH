@@ -43,6 +43,7 @@ public class TestAlphaCiv {
   @Before
   public void setUp() {
     game = new GameImpl();
+    game.createMap();
   }
 
   // FRS p. 455 states that 'Red is the first player to take a turn'.
@@ -51,5 +52,20 @@ public class TestAlphaCiv {
     assertThat(game, is(notNullValue()));
     // TODO: reenable the assert below to get started...
      assertThat(game.getPlayerInTurn(), is(Player.RED));
+  }
+
+  @Test
+  public void oceanAt_1_0() {
+    assertEquals(GameConstants.OCEANS, game.getTileAt(new Position(1,0)).getTypeString());
+  }
+
+  @Test
+  public void hillsAt_0_1() {
+    assertEquals(GameConstants.HILLS, game.getTileAt(new Position(0,1)).getTypeString());
+  }
+
+  @Test
+  public void mountainsAt_2_2() {
+    assertEquals(GameConstants.MOUNTAINS, game.getTileAt(new Position(2,2)).getTypeString());
   }
 }
