@@ -31,8 +31,8 @@ import java.util.HashMap;
 */
 
 public class GameImpl implements Game {
-  private HashMap<Position, TileImpl> tiles = new HashMap<>();
-  private HashMap<Position, UnitImpl> units = new HashMap<>();
+  private HashMap<Position, Tile> tiles = new HashMap<>();
+  private HashMap<Position, Unit> units = new HashMap<>();
   private Player currentPlayer = Player.RED;
 
   public Tile getTileAt( Position p ) { return tiles.get(p); }
