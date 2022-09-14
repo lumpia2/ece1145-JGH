@@ -46,14 +46,6 @@ public class TestAlphaCiv {
     game.createMap();
   }
 
-  // FRS p. 455 states that 'Red is the first player to take a turn'.
-  @Test
-  public void shouldBeRedAsStartingPlayer() {
-    assertThat(game, is(notNullValue()));
-    // TODO: reenable the assert below to get started...
-     assertThat(game.getPlayerInTurn(), is(Player.RED));
-  }
-
   @Test
   public void oceanAt_1_0() {
     assertEquals(GameConstants.OCEANS, game.getTileAt(new Position(1,0)).getTypeString());
@@ -66,6 +58,28 @@ public class TestAlphaCiv {
 
   @Test
   public void mountainsAt_2_2() {
-    assertEquals(GameConstants.MOUNTAINS, game.getTileAt(new Position(2,2)).getTypeString());
+    assertEquals(GameConstants.MOUNTAINS, game.getTileAt(new Position(2, 2)).getTypeString());
+  }
+
+  // FRS p. 455 states that 'Red is the first player to take a turn'.
+  @Test
+  public void shouldBeRedAsStartingPlayer() {
+    assertThat(game, is(notNullValue()));
+    assertThat(game.getPlayerInTurn(), is(Player.RED));
+  }
+
+  @Test
+  public void archerAt_2_0() {
+    assertEquals(GameConstants.ARCHER, game.getUnitAt(new Position(2,0)).getTypeString());
+  }
+
+  @Test
+  public void settlerAt_4_3() {
+    assertEquals(GameConstants.SETTLER, game.getUnitAt(new Position(4,3)).getTypeString());
+  }
+
+  @Test
+  public void nextPlayerBlue() {
+    assertThat(game.getPlayerInTurn(), is(Player.BLUE));
   }
 }
