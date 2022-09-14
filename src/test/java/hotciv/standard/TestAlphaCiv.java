@@ -84,6 +84,7 @@ public class TestAlphaCiv {
     assertThat(game.getPlayerInTurn(), is(Player.BLUE));
   }
 
+  @Test
   public void blueLegionAt_3_2() {
     assertEquals(GameConstants.LEGION, game.getUnitAt(new Position(3,2)).getTypeString());
   }
