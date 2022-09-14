@@ -69,17 +69,22 @@ public class TestAlphaCiv {
   }
 
   @Test
-  public void archerAt_2_0() {
+  public void redArcherAt_2_0() {
     assertEquals(GameConstants.ARCHER, game.getUnitAt(new Position(2,0)).getTypeString());
   }
 
   @Test
-  public void settlerAt_4_3() {
+  public void redSettlerAt_4_3() {
     assertEquals(GameConstants.SETTLER, game.getUnitAt(new Position(4,3)).getTypeString());
   }
 
   @Test
   public void nextPlayerBlue() {
+    game.endOfTurn();
     assertThat(game.getPlayerInTurn(), is(Player.BLUE));
+  }
+
+  public void blueLegionAt_3_2() {
+    assertEquals(GameConstants.LEGION, game.getUnitAt(new Position(3,2)).getTypeString());
   }
 }
