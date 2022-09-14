@@ -53,6 +53,39 @@ public class TestAlphaCiv {
     // assertThat(game.getPlayerInTurn(), is(Player.RED));
   }
 
+  // Aging test cases
+  @Test
+  public void startingAgeShouldBe4000() {
+      assertThat(game.getAge(), is(4000));
+  }
+
+  @Test
+  public void endOfTurnAdvancesAge100Years() {
+      game.endOfTurn();
+      assertThat(game.getAge(), is(3900));
+  }
+
+  // Winning Test Cases
+  @Test
+  public void winnerIsNullIfGameNotOver() {
+      assertThat(game.getWinner(), is(nullValue()));
+  }
+
+  @Test
+  public void winnerIsRedWhenAge3000() {
+      game.endOfTurn(); //age=3900
+      game.endOfTurn(); //age=3800
+      game.endOfTurn(); //age=3700
+      game.endOfTurn(); //age=3600
+      game.endOfTurn(); //age=3500
+      game.endOfTurn(); //age=3400
+      game.endOfTurn(); //age=3300
+      game.endOfTurn(); //age=3200
+      game.endOfTurn(); //age=3100
+      game.endOfTurn(); //age=3000
+      assertThat(game.getWinner(), is(Player.RED));
+  }
+
   /** REMOVE ME. Not a test of HotCiv, just an example of what
       matchers the hamcrest library has... */
   @Test

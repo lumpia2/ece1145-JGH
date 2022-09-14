@@ -30,16 +30,41 @@ import hotciv.framework.*;
 */
 
 public class GameImpl implements Game {
+  private int age;
+
+  // Constructor
+  public GameImpl()
+  {
+    this.age = 4000;
+  }
+
   public Tile getTileAt( Position p ) { return null; }
   public Unit getUnitAt( Position p ) { return null; }
   public City getCityAt( Position p ) { return null; }
   public Player getPlayerInTurn() { return null; }
-  public Player getWinner() { return null; }
-  public int getAge() { return 0; }
+  public Player getWinner() {
+    if(this.getAge() == 3000)
+    {
+      return Player.RED;
+    }
+    else
+    {
+      return null;
+    }
+  }
+
+  public int getAge()
+  {
+    return age;
+  }
+
   public boolean moveUnit( Position from, Position to ) {
     return false;
   }
-  public void endOfTurn() {}
+  public void endOfTurn() {
+    this.age -= 100;
+  }
+
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
   public void changeProductionInCityAt( Position p, String unitType ) {}
   public void performUnitActionAt( Position p ) {}
