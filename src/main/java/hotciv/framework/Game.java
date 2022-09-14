@@ -34,7 +34,7 @@ public interface Game {
   /** return a specific tile.
    * Precondition: Position p is a valid position in the world.
    * @param p the position in the world that must be returned.
-   * @return the tile at position p.
+   * @return the tile at position p.    return false;
    */
   public Tile getTileAt( Position p );
 
@@ -54,7 +54,7 @@ public interface Game {
    */
   public City getCityAt( Position p );
 
-  /** return the player that is 'in turn', that is, is able to
+  /** return the player that is 'in turn  ', that is, is able to
    * move units and manage cities.
    * @return the player that is in turn
    */
@@ -133,5 +133,7 @@ public interface Game {
    * @param p the position of a unit that must perform its action.
    * Nothing happens in case the unit has no associated action.
    */
-  public void performUnitActionAt( Position p );  
+  public void performUnitActionAt( Position p );
+
+  public void createMap();
 }

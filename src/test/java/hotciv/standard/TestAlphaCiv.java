@@ -12,23 +12,23 @@ import java.util.*;
 
     Updated Oct 2015 for using Hamcrest matchers
 
-   This source code is from the book 
+   This source code is from the book
      "Flexible, Reliable Software:
        Using Patterns and Agile Development"
      published 2010 by CRC Press.
-   Author: 
-     Henrik B Christensen 
+   Author:
+     Henrik B Christensen
      Department of Computer Science
      Aarhus University
-   
+
    Please visit http://www.baerbak.com/ for further information.
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
- 
+
        http://www.apache.org/licenses/LICENSE-2.0
- 
+
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -43,14 +43,29 @@ public class TestAlphaCiv {
   @Before
   public void setUp() {
     game = new GameImpl();
+    game.createMap();
+  }
+
+  @Test
+  public void oceanAt_1_0() {
+    assertEquals(GameConstants.OCEANS, game.getTileAt(new Position(1,0)).getTypeString());
+  }
+
+  @Test
+  public void hillsAt_0_1() {
+    assertEquals(GameConstants.HILLS, game.getTileAt(new Position(0,1)).getTypeString());
+  }
+
+  @Test
+  public void mountainsAt_2_2() {
+    assertEquals(GameConstants.MOUNTAINS, game.getTileAt(new Position(2, 2)).getTypeString());
   }
 
   // FRS p. 455 states that 'Red is the first player to take a turn'.
   @Test
   public void shouldBeRedAsStartingPlayer() {
     assertThat(game, is(notNullValue()));
-    // TODO: reenable the assert below to get started...
-    // assertThat(game.getPlayerInTurn(), is(Player.RED));
+    assertThat(game.getPlayerInTurn(), is(Player.RED));
   }
 
   // Aging test cases
@@ -86,29 +101,23 @@ public class TestAlphaCiv {
       assertThat(game.getWinner(), is(Player.RED));
   }
 
-  /** REMOVE ME. Not a test of HotCiv, just an example of what
-      matchers the hamcrest library has... */
   @Test
-  public void shouldDefinetelyBeRemoved() {
-    // Matching null and not null values
-    // 'is' require an exact match
-    String s = null;
-    assertThat(s, is(nullValue()));
-    s = "Ok";
-    assertThat(s, is(notNullValue()));
-    assertThat(s, is("Ok"));
+  public void redArcherAt_2_0() {
+    assertEquals(GameConstants.ARCHER, game.getUnitAt(new Position(2,0)).getTypeString());
+  }
 
-    // If you only validate substrings, use containsString
-    assertThat("This is a dummy test", containsString("dummy"));
+  @Test
+  public void redSettlerAt_4_3() {
+    assertEquals(GameConstants.SETTLER, game.getUnitAt(new Position(4,3)).getTypeString());
+  }
 
-    // Match contents of Lists
-    List<String> l = new ArrayList<String>();
-    l.add("Bimse");
-    l.add("Bumse");
-    // Note - ordering is ignored when matching using hasItems
-    assertThat(l, hasItems(new String[] {"Bumse","Bimse"}));
+  @Test
+  public void nextPlayerBlue() {
+    game.endOfTurn();
+    assertThat(game.getPlayerInTurn(), is(Player.BLUE));
+  }
 
-    // Matchers may be combined, like is-not
-    assertThat(l.get(0), is(not("Bumse")));
+  public void blueLegionAt_3_2() {
+    assertEquals(GameConstants.LEGION, game.getUnitAt(new Position(3,2)).getTypeString());
   }
 }
