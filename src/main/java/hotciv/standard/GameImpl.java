@@ -42,6 +42,7 @@ public class GameImpl implements Game {
   public Unit getUnitAt( Position p ) { return null; }
   public City getCityAt( Position p ) { return null; }
   public Player getPlayerInTurn() { return null; }
+
   public Player getWinner() {
     if(this.getAge() == 3000)
     {
@@ -61,6 +62,7 @@ public class GameImpl implements Game {
   public boolean moveUnit( Position from, Position to ) {
     return false;
   }
+
   public void endOfTurn() {
     this.age -= 100;
   }
