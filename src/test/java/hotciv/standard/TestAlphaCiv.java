@@ -75,7 +75,8 @@ public class TestAlphaCiv {
   }
 
   @Test
-  public void endOfTurnAdvancesAge100Years() {
+  public void endOfRoundAdvancesAge100Years() {
+      game.endOfTurn();
       game.endOfTurn();
       assertThat(game.getAge(), is(3900));
   }
@@ -88,16 +89,10 @@ public class TestAlphaCiv {
 
   @Test
   public void winnerIsRedWhenAge3000() {
-      game.endOfTurn(); //age=3900
-      game.endOfTurn(); //age=3800
-      game.endOfTurn(); //age=3700
-      game.endOfTurn(); //age=3600
-      game.endOfTurn(); //age=3500
-      game.endOfTurn(); //age=3400
-      game.endOfTurn(); //age=3300
-      game.endOfTurn(); //age=3200
-      game.endOfTurn(); //age=3100
-      game.endOfTurn(); //age=3000
+      for(int i=0; i<20; i++)
+      {
+          game.endOfTurn();
+      }
       assertThat(game.getWinner(), is(Player.RED));
   }
 
