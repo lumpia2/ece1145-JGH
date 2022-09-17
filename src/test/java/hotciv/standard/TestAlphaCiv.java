@@ -12,23 +12,23 @@ import java.util.*;
 
     Updated Oct 2015 for using Hamcrest matchers
 
-   This source code is from the book 
+   This source code is from the book
      "Flexible, Reliable Software:
        Using Patterns and Agile Development"
      published 2010 by CRC Press.
-   Author: 
-     Henrik B Christensen 
+   Author:
+     Henrik B Christensen
      Department of Computer Science
      Aarhus University
-   
+
    Please visit http://www.baerbak.com/ for further information.
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
- 
+
        http://www.apache.org/licenses/LICENSE-2.0
- 
+
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -43,37 +43,88 @@ public class TestAlphaCiv {
   @Before
   public void setUp() {
     game = new GameImpl();
+    game.createMap();
+  }
+
+  @Test
+  public void oceanAt_1_0() {
+    assertEquals(GameConstants.OCEANS, game.getTileAt(new Position(1,0)).getTypeString());
+  }
+
+  @Test
+  public void hillsAt_0_1() {
+    assertEquals(GameConstants.HILLS, game.getTileAt(new Position(0,1)).getTypeString());
+  }
+
+  @Test
+  public void mountainsAt_2_2() {
+    assertEquals(GameConstants.MOUNTAINS, game.getTileAt(new Position(2, 2)).getTypeString());
   }
 
   // FRS p. 455 states that 'Red is the first player to take a turn'.
   @Test
   public void shouldBeRedAsStartingPlayer() {
     assertThat(game, is(notNullValue()));
-    // TODO: reenable the assert below to get started...
-    // assertThat(game.getPlayerInTurn(), is(Player.RED));
+    assertThat(game.getPlayerInTurn(), is(Player.RED));
   }
 
-  // The attacking unit always wins no matter what the defensive or attacking strengths are
+  // Aging test cases
   @Test
-  public void attackingUnitAlwaysWins() {
-    assertThat(game, is(notNullValue()));
-
-    assertThat(game.moveUnit(new Position (2,0), new Position (3, 2)), is(true));
+  public void startingAgeShouldBe4000() {
+      assertThat(game.getAge(), is(4000));
   }
 
-  // No associated actions are supported by any unit
   @Test
-  public void noActionsWork() {
-    assertThat(game, is(notNullValue()));
-
-
+  public void endOfRoundAdvancesAge100Years() {
+      game.endOfTurn();
+      game.endOfTurn();
+      assertThat(game.getAge(), is(3900));
   }
 
-  // Players can select to produce archers, legions, or settlers. Cities remain population size 1, and produce 6 production per round.
+  // Winning Test Cases
   @Test
-  public void checkCityPopAndProd() {
-    assertThat(game, is(notNullValue()));
+  public void winnerIsNullIfGameNotOver() {
+      assertThat(game.getWinner(), is(nullValue()));
+  }
 
+  @Test
+  public void winnerIsRedWhenAge3000() {
+      for(int i=0; i<20; i++)
+      {
+          game.endOfTurn();
+      }
+      assertThat(game.getWinner(), is(Player.RED));
+  }
+
+  @Test
+  public void redArcherAt_2_0() {
+    assertEquals(GameConstants.ARCHER, game.getUnitAt(new Position(2,0)).getTypeString());
+  }
+
+  @Test
+  public void redSettlerAt_4_3() {
+    assertEquals(GameConstants.SETTLER, game.getUnitAt(new Position(4,3)).getTypeString());
+  }
+
+  @Test
+  public void nextPlayerBlue() {
+    game.endOfTurn();
+    assertThat(game.getPlayerInTurn(), is(Player.BLUE));
+  }
+
+  public void blueLegionAt_3_2() {
+    assertEquals(GameConstants.LEGION, game.getUnitAt(new Position(3,2)).getTypeString());
+  }
+
+  @Test
+  public void attackerAlwaysWins() {
+    assertThat(game.moveUnit(new Position(2,0 ), new Position(3, 2)), is(true));
+  }
+
+  @Test
+  public void checkCityStats() {
     City city = new CityImpl();
+
+    assertThat(city.getSize(), is(1));
   }
 }
