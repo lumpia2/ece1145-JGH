@@ -122,9 +122,32 @@ public class TestAlphaCiv {
   }
 
   @Test
-  public void checkCityStats() {
-    City city = new CityImpl();
+  public void checkCities() {
+    City redCity = game.getCityAt(new Position(1,1));
+    City blueCity = game.getCityAt(new Position(4,1));
 
-    assertThat(city.getSize(), is(1));
+    assertThat(redCity, is(notNullValue()));
+    assertThat(blueCity, is(notNullValue()));
   }
+  @Test
+  public void checkCitySize() {
+    City redCity = game.getCityAt(new Position(1,1));
+    City blueCity = game.getCityAt(new Position(4,1));
+
+    assertThat(redCity.getSize(), is(1));
+    assertThat(blueCity.getSize(), is(1));
+  }
+
+  @Test
+  public void checkCityProd() {
+    City redCity = game.getCityAt(new Position(1,1));
+    City blueCity = game.getCityAt(new Position(4,1));
+
+    assertThat(redCity.getTreasury(), is(0));
+    assertThat(blueCity.getTreasury(), is(0));
+    game.endOfTurn();
+    assertThat(redCity.getTreasury(), is(6));
+    assertThat(blueCity.getTreasury(), is(6));
+  }
+
 }

@@ -1,6 +1,7 @@
 package hotciv.standard;
 
 import hotciv.framework.*;
+
 import java.util.HashMap;
 
 /** Skeleton implementation of HotCiv.
@@ -33,7 +34,10 @@ import java.util.HashMap;
 public class GameImpl implements Game {
   private HashMap<Position, TileImpl> tiles = new HashMap<>();
   private HashMap<Position, UnitImpl> units = new HashMap<>();
+
+  private HashMap<Position, CityImpl> cities = new HashMap<>();
   private Player currentPlayer = Player.RED;
+
   private int age;
 
   public GameImpl()
@@ -43,7 +47,7 @@ public class GameImpl implements Game {
 
   public Tile getTileAt( Position p ) { return tiles.get(p); }
   public Unit getUnitAt( Position p ) { return units.get(p); }
-  public City getCityAt( Position p ) { return null; }
+  public City getCityAt( Position p ) { return cities.get(p); }
   public Player getPlayerInTurn() { return currentPlayer; }
 
   public Player getWinner() {
@@ -70,6 +74,12 @@ public class GameImpl implements Game {
       currentPlayer = Player.RED;
       this.age -= 100;
     }
+
+    for (Position i : cities.keySet()) {
+      City city = this.getCityAt(i);
+
+      ((CityImpl) city).incrementTreasury();
+    }
   }
 
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
@@ -92,6 +102,9 @@ public class GameImpl implements Game {
         if (i==2 && j==0) { units.put(new Position(i,j), new UnitImpl(GameConstants.ARCHER, Player.RED)); }
         if (i==3 && j==2) { units.put(new Position(i,j), new UnitImpl(GameConstants.LEGION, Player.BLUE)); }
         if (i==4 && j==3) { units.put(new Position(i,j), new UnitImpl(GameConstants.SETTLER, Player.RED)); }
+
+        if (i==1 && j==1) { cities.put(new Position(i,j), new CityImpl(Player.RED)); }
+        if (i==4 && j==1) { cities.put(new Position(i,j), new CityImpl(Player.BLUE)); }
 
         tiles.put(new Position(i, j), new TileImpl(tileType));
       }

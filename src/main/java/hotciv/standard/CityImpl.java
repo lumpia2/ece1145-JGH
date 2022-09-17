@@ -1,16 +1,20 @@
 package hotciv.standard;
 
 import hotciv.framework.City;
+import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
 
 public class CityImpl implements City {
 
     // Private variables
-    private String WorkForceFocus;
-    private String Production;
-    private int Size = 1;
-    private int Treasury;
+    private String workForceFocus;
+    private String production;
+    private int treasury;
+    private Player owner;
 
+    public CityImpl(Player owner) {
+        this.owner = owner;
+    }
     // Member functions
     @Override
     public Player getOwner() {
@@ -19,12 +23,12 @@ public class CityImpl implements City {
 
     @Override
     public int getSize() {
-        return 0;
+        return 1;
     }
 
     @Override
     public int getTreasury() {
-        return 0;
+        return treasury;
     }
 
     @Override
@@ -38,6 +42,5 @@ public class CityImpl implements City {
     }
 
     // Mutator functions
-    public void setWorkForce(String NewFocus) {
-    }
+    public void incrementTreasury() { treasury+=6; }
 }
