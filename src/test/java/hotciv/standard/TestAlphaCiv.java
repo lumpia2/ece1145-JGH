@@ -115,4 +115,39 @@ public class TestAlphaCiv {
   public void blueLegionAt_3_2() {
     assertEquals(GameConstants.LEGION, game.getUnitAt(new Position(3,2)).getTypeString());
   }
+
+  @Test
+  public void attackerAlwaysWins() {
+    assertThat(game.moveUnit(new Position(2,0 ), new Position(3, 2)), is(true));
+  }
+
+  @Test
+  public void checkCities() {
+    City redCity = game.getCityAt(new Position(1,1));
+    City blueCity = game.getCityAt(new Position(4,1));
+
+    assertThat(redCity, is(notNullValue()));
+    assertThat(blueCity, is(notNullValue()));
+  }
+  @Test
+  public void checkCitySize() {
+    City redCity = game.getCityAt(new Position(1,1));
+    City blueCity = game.getCityAt(new Position(4,1));
+
+    assertThat(redCity.getSize(), is(1));
+    assertThat(blueCity.getSize(), is(1));
+  }
+
+  @Test
+  public void checkCityProd() {
+    City redCity = game.getCityAt(new Position(1,1));
+    City blueCity = game.getCityAt(new Position(4,1));
+
+    assertThat(redCity.getTreasury(), is(0));
+    assertThat(blueCity.getTreasury(), is(0));
+    game.endOfTurn();
+    assertThat(redCity.getTreasury(), is(6));
+    assertThat(blueCity.getTreasury(), is(6));
+  }
+
 }
