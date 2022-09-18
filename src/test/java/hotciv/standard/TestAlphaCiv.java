@@ -61,7 +61,16 @@ public class TestAlphaCiv {
     assertEquals(GameConstants.MOUNTAINS, game.getTileAt(new Position(2, 2)).getTypeString());
   }
 
-  // FRS p. 455 states that 'Red is the first player to take a turn'.
+  @Test
+  public void plainsElsewhere(){
+    for (int i = 0; i < GameConstants.WORLDSIZE; i++) {
+      for (int j = 0; j < GameConstants.WORLDSIZE; j++) {
+        if ((i == 1 && j == 0) || (i == 0 && j == 1) || (i == 2 && j == 2))
+          continue;
+        assertEquals(GameConstants.PLAINS, game.getTileAt(new Position(i,j)).getTypeString());
+      }
+    }
+  }
   @Test
   public void shouldBeRedAsStartingPlayer() {
     assertThat(game, is(notNullValue()));
@@ -112,6 +121,7 @@ public class TestAlphaCiv {
     assertThat(game.getPlayerInTurn(), is(Player.BLUE));
   }
 
+  @Test
   public void blueLegionAt_3_2() {
     assertEquals(GameConstants.LEGION, game.getUnitAt(new Position(3,2)).getTypeString());
   }
