@@ -12,23 +12,23 @@ import java.util.*;
 
     Updated Oct 2015 for using Hamcrest matchers
 
-   This source code is from the book 
+   This source code is from the book
      "Flexible, Reliable Software:
        Using Patterns and Agile Development"
      published 2010 by CRC Press.
-   Author: 
-     Henrik B Christensen 
+   Author:
+     Henrik B Christensen
      Department of Computer Science
      Aarhus University
-   
+
    Please visit http://www.baerbak.com/ for further information.
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
- 
+
        http://www.apache.org/licenses/LICENSE-2.0
- 
+
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -68,6 +68,34 @@ public class TestAlphaCiv {
     assertThat(game.getPlayerInTurn(), is(Player.RED));
   }
 
+  // Aging test cases
+  @Test
+  public void startingAgeShouldBe4000() {
+      assertThat(game.getAge(), is(4000));
+  }
+
+  @Test
+  public void endOfRoundAdvancesAge100Years() {
+      game.endOfTurn();
+      game.endOfTurn();
+      assertThat(game.getAge(), is(3900));
+  }
+
+  // Winning Test Cases
+  @Test
+  public void winnerIsNullIfGameNotOver() {
+      assertThat(game.getWinner(), is(nullValue()));
+  }
+
+  @Test
+  public void winnerIsRedWhenAge3000() {
+      for(int i=0; i<20; i++)
+      {
+          game.endOfTurn();
+      }
+      assertThat(game.getWinner(), is(Player.RED));
+  }
+
   @Test
   public void redArcherAt_2_0() {
     assertEquals(GameConstants.ARCHER, game.getUnitAt(new Position(2,0)).getTypeString());
@@ -88,4 +116,39 @@ public class TestAlphaCiv {
   public void blueLegionAt_3_2() {
     assertEquals(GameConstants.LEGION, game.getUnitAt(new Position(3,2)).getTypeString());
   }
+
+  @Test
+  public void attackerAlwaysWins() {
+    assertThat(game.moveUnit(new Position(2,0 ), new Position(3, 2)), is(true));
+  }
+
+  @Test
+  public void checkCities() {
+    City redCity = game.getCityAt(new Position(1,1));
+    City blueCity = game.getCityAt(new Position(4,1));
+
+    assertThat(redCity, is(notNullValue()));
+    assertThat(blueCity, is(notNullValue()));
+  }
+  @Test
+  public void checkCitySize() {
+    City redCity = game.getCityAt(new Position(1,1));
+    City blueCity = game.getCityAt(new Position(4,1));
+
+    assertThat(redCity.getSize(), is(1));
+    assertThat(blueCity.getSize(), is(1));
+  }
+
+  @Test
+  public void checkCityProd() {
+    City redCity = game.getCityAt(new Position(1,1));
+    City blueCity = game.getCityAt(new Position(4,1));
+
+    assertThat(redCity.getTreasury(), is(0));
+    assertThat(blueCity.getTreasury(), is(0));
+    game.endOfTurn();
+    assertThat(redCity.getTreasury(), is(6));
+    assertThat(blueCity.getTreasury(), is(6));
+  }
+
 }
