@@ -89,10 +89,10 @@ public class GameImpl implements Game {
   public void performUnitActionAt( Position p ) {}
 
   public void createMap() {
-    String tileType = GameConstants.PLAINS;
 
     for (int i = 0; i < GameConstants.WORLDSIZE; i++) {
       for (int j = 0; j < GameConstants.WORLDSIZE; j++) {
+        String tileType = GameConstants.PLAINS;
         if (i == 1 && j == 0) {
           tileType = GameConstants.OCEANS;
         } else if (i == 0 && j == 1) {
