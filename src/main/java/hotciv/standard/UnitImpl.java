@@ -6,7 +6,7 @@ import hotciv.framework.Unit;
 public class UnitImpl implements Unit {
     private String type;
     private Player owner;
-    
+
     public UnitImpl(String type, Player owner) {
         this.type = type;
         this.owner = owner;
