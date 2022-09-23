@@ -72,6 +72,7 @@ public class GameImpl implements Game {
     }
   }
 
+  // Test adding comment to merged branch
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
   public void changeProductionInCityAt( Position p, String unitType ) {}
   public void performUnitActionAt( Position p ) {}
