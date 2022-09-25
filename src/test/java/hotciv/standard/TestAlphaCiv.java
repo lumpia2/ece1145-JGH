@@ -46,6 +46,7 @@ public class TestAlphaCiv {
     game.createMap();
   }
 
+  // Comment for hotfix release 2.1
   @Test
   public void productionOfCityIsArcher() {
     City redCity = game.getCityAt(new Position(1,1));
