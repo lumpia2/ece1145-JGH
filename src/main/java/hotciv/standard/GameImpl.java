@@ -71,16 +71,18 @@ public class GameImpl implements Game {
     return true;
   }
   public void endOfTurn() {
-    if (currentPlayer == Player.RED) { currentPlayer = Player.BLUE; }
+    if (currentPlayer == Player.RED) {
+      currentPlayer = Player.BLUE;
+    }
     else if (currentPlayer == Player.BLUE) {
       currentPlayer = Player.RED;
       this.age -= 100;
-    }
 
-    for (Position i : cities.keySet()) {
-      City city = this.getCityAt(i);
+      for (Position i : cities.keySet()) {
+        City city = this.getCityAt(i);
 
-      ((CityImpl) city).incrementTreasury();
+        ((CityImpl) city).incrementTreasury();
+      }
     }
   }
 

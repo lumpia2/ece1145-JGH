@@ -156,6 +156,7 @@ public class TestAlphaCiv {
     assertThat(redCity.getTreasury(), is(0));
     assertThat(blueCity.getTreasury(), is(0));
     game.endOfTurn();
+    game.endOfTurn();
     assertThat(redCity.getTreasury(), is(6));
     assertThat(blueCity.getTreasury(), is(6));
   }
