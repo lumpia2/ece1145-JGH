@@ -185,6 +185,19 @@ public class TestAlphaCiv {
   }
 
   @Test
+  public void unitAboveCityWhenCenterOccupied() {
+    City redCity = game.getCityAt(new Position(1,1));
+    game.changeProductionInCityAt(new Position(1,1), GameConstants.ARCHER);
+
+    game.endOfTurn(); game.endOfTurn(); // Treasury 6
+    game.endOfTurn(); game.endOfTurn(); // Treasury 2 unit at center
+    game.endOfTurn(); game.endOfTurn(); // Treasury 8
+    game.endOfTurn(); game.endOfTurn(); // Treasury 4 unit above
+
+    assertEquals(GameConstants.ARCHER, game.getUnitAt(new Position(0,1)).getTypeString());
+  }
+
+  @Test
   public void cityTreasuryDecreasesWhenUnitProduced() {
     City redCity = game.getCityAt(new Position(1,1));
     game.changeProductionInCityAt(new Position(1,1), GameConstants.ARCHER);
