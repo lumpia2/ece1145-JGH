@@ -87,7 +87,11 @@ public class GameImpl implements Game {
   }
 
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
-  public void changeProductionInCityAt( Position p, String unitType ) {}
+  public void changeProductionInCityAt( Position p, String unitType ) {
+    City city = this.getCityAt(p);
+    ((CityImpl) city).setProduction(unitType);
+  }
+
   public void performUnitActionAt( Position p ) {}
 
   public void createMap() {

@@ -47,6 +47,13 @@ public class TestAlphaCiv {
   }
 
   @Test
+  public void productionOfCityIsArcher() {
+    City redCity = game.getCityAt(new Position(1,1));
+    game.changeProductionInCityAt(new Position(1,1), GameConstants.ARCHER);
+    assertEquals(redCity.getProduction(), GameConstants.ARCHER);
+  }
+
+  @Test
   public void oceanAt_1_0() {
     assertEquals(GameConstants.OCEANS, game.getTileAt(new Position(1,0)).getTypeString());
   }
