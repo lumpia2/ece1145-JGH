@@ -208,4 +208,11 @@ public class TestAlphaCiv {
     assertThat(redCity.getTreasury(), is(2));
   }
 
+  @Test
+  public void settlerDoesNothing() {
+    game.performUnitActionAt(new Position(4, 3));
+
+    assertThat(game.getCityAt(new Position(4,3)), is(nullValue()));
+    assertEquals(GameConstants.SETTLER, game.getUnitAt(new Position(4,3)).getTypeString());
+  }
 }
