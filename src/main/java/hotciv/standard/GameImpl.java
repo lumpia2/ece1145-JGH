@@ -3,6 +3,7 @@ package hotciv.standard;
 import hotciv.framework.*;
 
 import java.util.HashMap;
+import java.util.Iterator;
 
 /** Skeleton implementation of HotCiv.
 
@@ -80,8 +81,31 @@ public class GameImpl implements Game {
 
       for (Position i : cities.keySet()) {
         City city = this.getCityAt(i);
+        int  productionCost = 0;
 
         ((CityImpl) city).incrementTreasury();
+
+        if(city.getProduction() != null)
+        {
+          switch(city.getProduction()) {
+            case(GameConstants.ARCHER):
+              productionCost = GameConstants.ARCHER_COST;
+              break;
+            case(GameConstants.LEGION):
+              productionCost = GameConstants.LEGION_COST;
+              break;
+            case(GameConstants.SETTLER):
+              productionCost = GameConstants.SETTLER_COST;
+              break;
+          }
+
+          if(city.getTreasury() >= productionCost)
+          {
+            this.placeUnit(i, city);
+
+            ((CityImpl) city).decreaseTreasury(productionCost);
+          }
+        }
       }
     }
   }
@@ -116,6 +140,39 @@ public class GameImpl implements Game {
 
         tiles.put(new Position(i, j), new TileImpl(tileType));
       }
+    }
+  }
+
+  /**
+   * Helper method to find the first available tile to place a specified unit for a city
+   *
+   * @param p a Position containing the center of the city
+   * @param c a City to place a unit for
+   */
+  private void placeUnit(Position p, City c) {
+    Iterator<Position> i8 = Utility.get8neighborhoodIterator(p);
+
+    if(!units.containsKey(p))
+    {
+      units.put(p, new UnitImpl(c.getProduction(), c.getOwner()));
+    }
+    else
+    {
+      Position nextPosition = i8.next();
+
+      while(units.containsKey(nextPosition))
+      {
+        if(i8.hasNext())
+        {
+          nextPosition = i8.next();
+        }
+        else
+        {
+          return;
+        }
+      }
+
+      units.put(nextPosition, new UnitImpl(c.getProduction(), c.getOwner()));
     }
   }
 }

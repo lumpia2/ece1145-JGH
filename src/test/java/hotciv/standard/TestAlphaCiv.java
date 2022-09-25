@@ -169,11 +169,50 @@ public class TestAlphaCiv {
   }
 
   @Test
+  public void cityProducesArcher() {
+    City redCity = game.getCityAt(new Position(1,1));
+    City blueCity = game.getCityAt(new Position(4,1));
+    game.changeProductionInCityAt(new Position(1,1), GameConstants.ARCHER);
+    game.changeProductionInCityAt(new Position(4,1), GameConstants.ARCHER);
+
+    game.endOfTurn();
+    game.endOfTurn();
+
+    game.endOfTurn();
+    game.endOfTurn();
+
+    assertEquals(GameConstants.ARCHER, game.getUnitAt(new Position(1,1)).getTypeString());
+  }
+
+  @Test
+  public void unitAboveCityWhenCenterOccupied() {
+    City redCity = game.getCityAt(new Position(1,1));
+    game.changeProductionInCityAt(new Position(1,1), GameConstants.ARCHER);
+
+    game.endOfTurn(); game.endOfTurn(); // Treasury 6
+    game.endOfTurn(); game.endOfTurn(); // Treasury 2 unit at center
+    game.endOfTurn(); game.endOfTurn(); // Treasury 8
+    game.endOfTurn(); game.endOfTurn(); // Treasury 4 unit above
+
+    assertEquals(GameConstants.ARCHER, game.getUnitAt(new Position(0,1)).getTypeString());
+  }
+
+  @Test
+  public void cityTreasuryDecreasesWhenUnitProduced() {
+    City redCity = game.getCityAt(new Position(1,1));
+    game.changeProductionInCityAt(new Position(1,1), GameConstants.ARCHER);
+
+    game.endOfTurn(); game.endOfTurn(); // Treasury = 6
+    game.endOfTurn(); game.endOfTurn(); // Treasury = 12 - 10 for archer production
+
+    assertThat(redCity.getTreasury(), is(2));
+  }
+
+  @Test
   public void settlerDoesNothing() {
     game.performUnitActionAt(new Position(4, 3));
 
     assertThat(game.getCityAt(new Position(4,3)), is(nullValue()));
     assertEquals(GameConstants.SETTLER, game.getUnitAt(new Position(4,3)).getTypeString());
   }
-  
 }
