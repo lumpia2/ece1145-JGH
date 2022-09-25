@@ -18,7 +18,7 @@ public class CityImpl implements City {
     // Member functions
     @Override
     public Player getOwner() {
-        return null;
+        return this.owner;
     }
 
     @Override
@@ -33,7 +33,7 @@ public class CityImpl implements City {
 
     @Override
     public String getProduction() {
-        return null;
+        return production;
     }
 
     @Override
@@ -43,4 +43,8 @@ public class CityImpl implements City {
 
     // Mutator functions
     public void incrementTreasury() { treasury+=6; }
+
+    public void setProduction(String production) {
+        this.production = production;
+    }
 }

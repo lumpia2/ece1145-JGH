@@ -71,21 +71,27 @@ public class GameImpl implements Game {
     return true;
   }
   public void endOfTurn() {
-    if (currentPlayer == Player.RED) { currentPlayer = Player.BLUE; }
+    if (currentPlayer == Player.RED) {
+      currentPlayer = Player.BLUE;
+    }
     else if (currentPlayer == Player.BLUE) {
       currentPlayer = Player.RED;
       this.age -= 100;
-    }
 
-    for (Position i : cities.keySet()) {
-      City city = this.getCityAt(i);
+      for (Position i : cities.keySet()) {
+        City city = this.getCityAt(i);
 
-      ((CityImpl) city).incrementTreasury();
+        ((CityImpl) city).incrementTreasury();
+      }
     }
   }
 
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
-  public void changeProductionInCityAt( Position p, String unitType ) {}
+  public void changeProductionInCityAt( Position p, String unitType ) {
+    City city = this.getCityAt(p);
+    ((CityImpl) city).setProduction(unitType);
+  }
+
   public void performUnitActionAt( Position p ) {}
 
   public void createMap() {
