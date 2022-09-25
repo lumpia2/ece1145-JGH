@@ -80,8 +80,31 @@ public class GameImpl implements Game {
 
       for (Position i : cities.keySet()) {
         City city = this.getCityAt(i);
+        int  productionCost = 0;
 
         ((CityImpl) city).incrementTreasury();
+
+        if(city.getProduction() != null)
+        {
+          switch(city.getProduction()) {
+            case(GameConstants.ARCHER):
+              productionCost = GameConstants.ARCHER_COST;
+              break;
+            case(GameConstants.LEGION):
+              productionCost = GameConstants.LEGION_COST;
+              break;
+            case(GameConstants.SETTLER):
+              productionCost = GameConstants.SETTLER_COST;
+              break;
+          }
+
+          if(city.getTreasury() >= productionCost)
+          {
+            units.put(i, new UnitImpl(city.getProduction(), city.getOwner()));
+
+            ((CityImpl) city).decreaseTreasury(productionCost);
+          }
+        }
       }
     }
   }

@@ -47,4 +47,8 @@ public class CityImpl implements City {
     public void setProduction(String production) {
         this.production = production;
     }
+
+    public void decreaseTreasury(int cost) {
+        treasury -= cost;
+    }
 }
