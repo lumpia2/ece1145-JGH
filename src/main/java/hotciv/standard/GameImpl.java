@@ -40,6 +40,7 @@ public class GameImpl implements Game {
   private HashMap<Position, CityImpl> cities = new HashMap<>();
 
   private Player currentPlayer = Player.RED;
+  private AgingStrategy agingStrategy;
 
   private int age;
 
@@ -47,6 +48,13 @@ public class GameImpl implements Game {
   {
     this.age = 4000;
   }
+
+  public GameImpl(AgingStrategy agingStrategy)
+  {
+    this.age = 4000;
+     this.agingStrategy = agingStrategy;
+  }
+
 
   public Tile getTileAt( Position p ) { return tiles.get(p); }
   public Unit getUnitAt( Position p ) { return units.get(p); }
@@ -77,7 +85,7 @@ public class GameImpl implements Game {
     }
     else if (currentPlayer == Player.BLUE) {
       currentPlayer = Player.RED;
-      this.age -= 100;
+      this.age = agingStrategy.ageWorld(this.age);
 
       for (Position i : cities.keySet()) {
         City city = this.getCityAt(i);
