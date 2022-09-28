@@ -12,7 +12,7 @@ public class TestBetaCiv {
   /** Fixture for alphaciv testing. */
   @Before
   public void setUp() {
-    game = new GameImpl( new BetaAgingStrategy());
+    game = new GameImpl( new BetaAgingStrategy(), new AlphaWinningStrategy());
     game.createMap();
   }
 
