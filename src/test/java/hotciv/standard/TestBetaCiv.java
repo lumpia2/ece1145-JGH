@@ -4,7 +4,6 @@ import hotciv.framework.*;
 
 import org.junit.*;
 import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
 
 public class TestBetaCiv {
   private Game game;
@@ -50,6 +49,7 @@ public class TestBetaCiv {
     this.passTenRounds(); //1000BC
     this.passTenRounds(); //1BC
     this.passTenRounds(); //450
+
     this.endOfRound();
     assertEquals(500, game.getAge());
   }
@@ -85,7 +85,6 @@ public class TestBetaCiv {
     this.endOfRound(); this.endOfRound(); //1550
     this.endOfRound(); this.endOfRound(); //1650
     this.endOfRound(); this.endOfRound(); //1750
-
     this.endOfRound(); this.endOfRound(); //1800
     this.endOfRound(); this.endOfRound(); //1850
     this.endOfRound(); this.endOfRound(); //1900
@@ -114,7 +113,18 @@ public class TestBetaCiv {
     assertEquals(1971, game.getAge());
   }
 
+  @Test
+  public void winnerIsNullIfNotAllCitiesConquered()
+  {
+    assertNull(game.getWinner());
+  }
 
+  @Test
+  public void whenRedOwnsAllCitiesRedIsWinner()
+  {
+    ((CityImpl) game.getCityAt(new Position(4,1))).setOwner(Player.RED);
+    assertEquals(Player.RED, game.getWinner());
+  }
 
   private void endOfRound()
   {
@@ -128,18 +138,5 @@ public class TestBetaCiv {
     endOfRound(); endOfRound();
     endOfRound(); endOfRound();
     endOfRound(); endOfRound();
-  }
-
-  @Test
-  public void winnerIsNullIfNotAllCitiesConquered()
-  {
-    assertNull(game.getWinner());
-  }
-
-  @Test
-  public void whenRedOwnsAllCitiesRedIsWinner()
-  {
-    ((CityImpl) game.getCityAt(new Position(4,1))).setOwner(Player.RED);
-    assertEquals(Player.RED, game.getWinner());
   }
 }

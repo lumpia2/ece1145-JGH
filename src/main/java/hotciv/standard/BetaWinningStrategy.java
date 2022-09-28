@@ -25,6 +25,7 @@ public class BetaWinningStrategy implements WinningStrategy {
         }
       }
     }
+
     return lastOwner;
   }
 }
