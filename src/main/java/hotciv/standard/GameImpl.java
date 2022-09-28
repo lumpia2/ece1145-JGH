@@ -53,8 +53,8 @@ public class GameImpl implements Game {
   public GameImpl(AgingStrategy agingStrategy, WinningStrategy winningStrategy)
   {
     this.age = -4000;
-     this.agingStrategy = agingStrategy;
-     this.winningStrategy = winningStrategy;
+    this.agingStrategy = agingStrategy;
+    this.winningStrategy = winningStrategy;
   }
 
 

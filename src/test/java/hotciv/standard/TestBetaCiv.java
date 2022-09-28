@@ -9,10 +9,10 @@ import static org.hamcrest.CoreMatchers.*;
 public class TestBetaCiv {
   private Game game;
 
-  /** Fixture for alphaciv testing. */
+  /** Fixture for betaciv testing. */
   @Before
   public void setUp() {
-    game = new GameImpl( new BetaAgingStrategy(), new AlphaWinningStrategy());
+    game = new GameImpl( new BetaAgingStrategy(), new BetaWinningStrategy());
     game.createMap();
   }
 
@@ -128,5 +128,18 @@ public class TestBetaCiv {
     endOfRound(); endOfRound();
     endOfRound(); endOfRound();
     endOfRound(); endOfRound();
+  }
+
+  @Test
+  public void winnerIsNullIfNotAllCitiesConquered()
+  {
+    assertNull(game.getWinner());
+  }
+
+  @Test
+  public void whenRedOwnsAllCitiesRedIsWinner()
+  {
+    ((CityImpl) game.getCityAt(new Position(4,1))).setOwner(Player.RED);
+    assertEquals(Player.RED, game.getWinner());
   }
 }
