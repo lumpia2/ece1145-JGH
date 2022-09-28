@@ -46,12 +46,12 @@ public class GameImpl implements Game {
 
   public GameImpl()
   {
-    this.age = 4000;
+    this.age = -4000;
   }
 
   public GameImpl(AgingStrategy agingStrategy)
   {
-    this.age = 4000;
+    this.age = -4000;
      this.agingStrategy = agingStrategy;
   }
 
@@ -62,7 +62,7 @@ public class GameImpl implements Game {
   public Player getPlayerInTurn() { return currentPlayer; }
 
   public Player getWinner() {
-    if(this.getAge() == 3000)
+    if(this.getAge() == -3000)
     {
       return Player.RED;
     }
