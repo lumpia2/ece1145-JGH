@@ -12,9 +12,11 @@ public class UnitImpl implements Unit {
         this.owner = owner;
     }
 
+    @Override
     public String getTypeString() { return type; }
 
-    public Player getOwner() { return owner;}
+    @Override
+    public Player getOwner() { return owner; }
 
     public int getMoveCount() { return 0; }
 

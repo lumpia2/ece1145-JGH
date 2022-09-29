@@ -34,18 +34,30 @@ import java.util.Iterator;
 
 public class GameImpl implements Game {
 
-  private HashMap<Position, TileImpl> tiles = new HashMap<>();
-  private HashMap<Position, UnitImpl> units = new HashMap<>();
+  private HashMap<Position, Tile> tiles = new HashMap<>();
+  private HashMap<Position, Unit> units = new HashMap<>();
+  private HashMap<Position, City> cities = new HashMap<>();
 
-  private HashMap<Position, CityImpl> cities = new HashMap<>();
+//  private HashMap<Position, Tile> tiles;
+//  private HashMap<Position, Unit> units;
+//  private HashMap<Position, City> cities;
 
   private Player currentPlayer = Player.RED;
+
 
   private int age;
 
   public GameImpl()
   {
     this.age = 4000;
+  }
+
+  public GameImpl(WorldLayoutStrategy worldLayoutStrategy) {
+    this.age = 4000;
+    WorldLayoutDTO mapData = worldLayoutStrategy.createWorld();
+    this.tiles = mapData.getTiles();
+    this.units = mapData.getUnits();
+    this.cities = mapData.getCities();
   }
 
   public Tile getTileAt( Position p ) { return tiles.get(p); }
@@ -117,31 +129,6 @@ public class GameImpl implements Game {
   }
 
   public void performUnitActionAt( Position p ) {}
-
-  public void createMap() {
-
-    for (int i = 0; i < GameConstants.WORLDSIZE; i++) {
-      for (int j = 0; j < GameConstants.WORLDSIZE; j++) {
-        String tileType = GameConstants.PLAINS;
-        if (i == 1 && j == 0) {
-          tileType = GameConstants.OCEANS;
-        } else if (i == 0 && j == 1) {
-          tileType = GameConstants.HILLS;
-        } else if (i == 2 && j == 2) {
-          tileType = GameConstants.MOUNTAINS;
-        }
-
-        if (i==2 && j==0) { units.put(new Position(i,j), new UnitImpl(GameConstants.ARCHER, Player.RED)); }
-        if (i==3 && j==2) { units.put(new Position(i,j), new UnitImpl(GameConstants.LEGION, Player.BLUE)); }
-        if (i==4 && j==3) { units.put(new Position(i,j), new UnitImpl(GameConstants.SETTLER, Player.RED)); }
-
-        if (i==1 && j==1) { cities.put(new Position(i,j), new CityImpl(Player.RED)); }
-        if (i==4 && j==1) { cities.put(new Position(i,j), new CityImpl(Player.BLUE)); }
-
-        tiles.put(new Position(i, j), new TileImpl(tileType));
-      }
-    }
-  }
 
   /**
    * Helper method to find the first available tile to place a specified unit for a city

@@ -43,7 +43,7 @@ public class TestAlphaCiv {
   @Before
   public void setUp() {
     game = new GameImpl();
-    game.createMap();
+//    game.createMap();
   }
 
   // Comment for hotfix release 2.1

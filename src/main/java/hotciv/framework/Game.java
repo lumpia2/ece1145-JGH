@@ -135,5 +135,4 @@ public interface Game {
    */
   public void performUnitActionAt( Position p );
 
-  public void createMap();
 }
