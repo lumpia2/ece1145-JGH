@@ -51,4 +51,8 @@ public class CityImpl implements City {
     public void decreaseTreasury(int cost) {
         treasury -= cost;
     }
+
+    public void setOwner(Player owner) {
+        this.owner = owner;
+    }
 }
