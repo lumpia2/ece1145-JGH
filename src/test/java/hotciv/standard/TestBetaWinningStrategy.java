@@ -23,7 +23,7 @@ public class TestBetaWinningStrategy {
   @Test
   public void winnerShouldBeNullWhenCitiesHaveDifferentOwners()
   {
-    HashMap<Position, CityImpl> cities = new HashMap<>();
+    HashMap<Position, City> cities = new HashMap<>();
     cities.put(new Position(1,1), new CityImpl(Player.RED));
     cities.put(new Position(1,2), new CityImpl(Player.BLUE));
 
@@ -33,7 +33,7 @@ public class TestBetaWinningStrategy {
   @Test
   public void winnerShouldBeRedWhenRedOwnsAllCities()
   {
-    HashMap<Position, CityImpl> cities = new HashMap<>();
+    HashMap<Position, City> cities = new HashMap<>();
     cities.put(new Position(1,1), new CityImpl(Player.RED));
     cities.put(new Position(1,2), new CityImpl(Player.RED));
 

@@ -1,5 +1,6 @@
 package hotciv.standard;
 
+import hotciv.framework.City;
 import hotciv.framework.Player;
 import hotciv.framework.Position;
 import hotciv.framework.WinningStrategy;
@@ -8,10 +9,10 @@ import java.util.HashMap;
 
 public class BetaWinningStrategy implements WinningStrategy {
   @Override
-  public Player getWinner(int year, HashMap<Position, CityImpl> cities) {
+  public Player getWinner(int year, HashMap<Position, City> cities) {
     Player lastOwner = null;
 
-    for(CityImpl city : cities.values())
+    for(City city : cities.values())
     {
       if(lastOwner == null)
       {

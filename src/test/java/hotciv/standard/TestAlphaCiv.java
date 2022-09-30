@@ -42,10 +42,10 @@ public class TestAlphaCiv {
   /** Fixture for alphaciv testing. */
   @Before
   public void setUp() {
-    game = new GameImpl( new AlphaAgingStrategy(), new AlphaWinningStrategy());
-    game.createMap();
+    game = new GameImpl( new AlphaAgingStrategy(), new AlphaWinningStrategy(), new AlphaWorldLayoutStrategy());
   }
 
+  // Comment for hotfix release 2.1
   @Test
   public void productionOfCityIsArcher() {
     City redCity = game.getCityAt(new Position(1,1));
