@@ -9,8 +9,7 @@ public class DeltaWorldLayoutStrategy implements WorldLayoutStrategy {
     private HashMap<Position, Unit> units = new HashMap<>();
     private HashMap<Position, City> cities = new HashMap<>();
     @Override
-    public WorldLayoutDTO createWorld() {
-        WorldLayoutDTO dataTransfer = new WorldLayoutDTO();
+    public void createWorld() {
         String[] layout =
                 new String[] {
                         "...ooMooooo.....",
@@ -54,10 +53,20 @@ public class DeltaWorldLayoutStrategy implements WorldLayoutStrategy {
                 tiles.put( p, new TileImpl(type));
             }
         }
-        dataTransfer.setTiles(tiles);
-        dataTransfer.setUnits(units);
-        dataTransfer.setCities(cities);
+    }
 
-        return dataTransfer;
+    @Override
+    public HashMap<Position, Tile> getTiles() {
+        return tiles;
+    }
+
+    @Override
+    public HashMap<Position, Unit> getUnits() {
+        return units;
+    }
+
+    @Override
+    public HashMap<Position, City> getCities() {
+        return cities;
     }
 }

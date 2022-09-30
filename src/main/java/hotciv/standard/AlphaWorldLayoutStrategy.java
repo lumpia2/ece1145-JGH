@@ -9,8 +9,7 @@ public class AlphaWorldLayoutStrategy implements WorldLayoutStrategy {
     private HashMap<Position, Unit> units = new HashMap<>();
     private HashMap<Position, City> cities = new HashMap<>();
     @Override
-    public WorldLayoutDTO createWorld() {
-        WorldLayoutDTO dataTransfer = new WorldLayoutDTO();
+    public void createWorld() {
         for (int i = 0; i < GameConstants.WORLDSIZE; i++) {
             for (int j = 0; j < GameConstants.WORLDSIZE; j++) {
                 String tileType = GameConstants.PLAINS;
@@ -32,10 +31,20 @@ public class AlphaWorldLayoutStrategy implements WorldLayoutStrategy {
                 tiles.put(new Position(i, j), new TileImpl(tileType));
             }
         }
-        dataTransfer.setTiles(tiles);
-        dataTransfer.setUnits(units);
-        dataTransfer.setCities(cities);
+    }
 
-        return dataTransfer;
+    @Override
+    public HashMap<Position, Tile> getTiles() {
+        return tiles;
+    }
+
+    @Override
+    public HashMap<Position, Unit> getUnits() {
+        return units;
+    }
+
+    @Override
+    public HashMap<Position, City> getCities() {
+        return cities;
     }
 }

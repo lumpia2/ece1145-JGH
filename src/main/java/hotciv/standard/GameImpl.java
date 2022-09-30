@@ -39,10 +39,6 @@ public class GameImpl implements Game {
   private HashMap<Position, Unit> units = new HashMap<>();
   private HashMap<Position, City> cities = new HashMap<>();
 
-//  private HashMap<Position, Tile> tiles;
-//  private HashMap<Position, Unit> units;
-//  private HashMap<Position, City> cities;
-
   private Player currentPlayer = Player.RED;
 
 
@@ -162,11 +158,16 @@ public class GameImpl implements Game {
     }
   }
 
+  /**
+   * Helper method to create world
+   * 
+   * @param worldLayoutStrategy
+   */
   private void createWorld(WorldLayoutStrategy worldLayoutStrategy) {
-    WorldLayoutDTO mapData = worldLayoutStrategy.createWorld();
-    this.tiles = mapData.getTiles();
-    this.units = mapData.getUnits();
-    this.cities = mapData.getCities();
+    worldLayoutStrategy.createWorld();
+    this.tiles = worldLayoutStrategy.getTiles();
+    this.units = worldLayoutStrategy.getUnits();
+    this.cities = worldLayoutStrategy.getCities();
   }
 
   /**

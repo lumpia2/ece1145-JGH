@@ -1,7 +1,13 @@
 package hotciv.framework;
 
-import hotciv.standard.WorldLayoutDTO;
+import java.util.HashMap;
 
 public interface WorldLayoutStrategy {
-    public WorldLayoutDTO createWorld();
+    public void createWorld();
+
+    public HashMap<Position, Tile> getTiles();
+
+    public HashMap<Position, Unit> getUnits();
+
+    public HashMap<Position, City> getCities();
 }
