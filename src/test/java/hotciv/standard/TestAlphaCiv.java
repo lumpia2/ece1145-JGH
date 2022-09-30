@@ -42,7 +42,7 @@ public class TestAlphaCiv {
   /** Fixture for alphaciv testing. */
   @Before
   public void setUp() {
-    game = new GameImpl(new AlphaWorldLayoutStrategy());
+    game = new GameImpl( new AlphaAgingStrategy(), new AlphaWinningStrategy(), new AlphaWorldLayoutStrategy());
   }
 
   // Comment for hotfix release 2.1
@@ -86,15 +86,15 @@ public class TestAlphaCiv {
 
   // Aging test cases
   @Test
-  public void startingAgeShouldBe4000() {
-      assertThat(game.getAge(), is(4000));
+  public void startingAgeShouldBeNeg4000() {
+      assertThat(game.getAge(), is(-4000));
   }
 
   @Test
   public void endOfRoundAdvancesAge100Years() {
       game.endOfTurn();
       game.endOfTurn();
-      assertThat(game.getAge(), is(3900));
+      assertThat(game.getAge(), is(-3900));
   }
 
   // Winning Test Cases

@@ -40,17 +40,22 @@ public class GameImpl implements Game {
   private HashMap<Position, City> cities = new HashMap<>();
 
   private Player currentPlayer = Player.RED;
+  private AgingStrategy agingStrategy;
+  private WinningStrategy winningStrategy;
 
 
   private int age;
 
   public GameImpl()
   {
-    this.age = 4000;
+    this.age = -4000;
   }
 
-  public GameImpl(WorldLayoutStrategy worldLayoutStrategy) {
-    this.age = 4000;
+  public GameImpl(AgingStrategy agingStrategy, WinningStrategy winningStrategy, WorldLayoutStrategy worldLayoutStrategy)
+  {
+    this.age = -4000;
+    this.agingStrategy = agingStrategy;
+    this.winningStrategy = winningStrategy;
     createWorld(worldLayoutStrategy);
   }
 
@@ -60,14 +65,7 @@ public class GameImpl implements Game {
   public Player getPlayerInTurn() { return currentPlayer; }
 
   public Player getWinner() {
-    if(this.getAge() == 3000)
-    {
-      return Player.RED;
-    }
-    else
-    {
-      return null;
-    }
+    return winningStrategy.getWinner(this.getAge(), this.cities);
   }
 
   public int getAge() {
@@ -83,7 +81,7 @@ public class GameImpl implements Game {
     }
     else if (currentPlayer == Player.BLUE) {
       currentPlayer = Player.RED;
-      this.age -= 100;
+      this.age = agingStrategy.ageWorld(this.age);
 
       for (Position i : cities.keySet()) {
         City city = this.getCityAt(i);
