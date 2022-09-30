@@ -11,41 +11,47 @@ public class DeltaWorldLayoutStrategy implements WorldLayoutStrategy {
     @Override
     public WorldLayoutDTO createWorld() {
         WorldLayoutDTO dataTransfer = new WorldLayoutDTO();
-        for (int i = 0; i < GameConstants.WORLDSIZE; i++) {
-            for (int j = 0; j < GameConstants.WORLDSIZE; j++) {
-                String tileType = GameConstants.PLAINS;
-                if (i == 1 && j == 0) {
-                    tileType = GameConstants.OCEANS;
-                } else if (i == 0 && j == 1) {
-                    tileType = GameConstants.HILLS;
-                } else if (i == 2 && j == 2) {
-                    tileType = GameConstants.MOUNTAINS;
-                }
+        String[] layout =
+                new String[] {
+                        "...ooMooooo.....",
+                        "..ohhoooofffoo..",
+                        ".oooooMooo...oo.",
+                        ".ooMMMoooo..oooo",
+                        "...ofooohhoooo..",
+                        ".ofoofooooohhoo.",
+                        "...ooo..........",
+                        ".ooooo.ooohooM..",
+                        ".ooooo.oohooof..",
+                        "offfoooo.offoooo",
+                        "oooooooo...ooooo",
+                        ".ooMMMoooo......",
+                        "..ooooooffoooo..",
+                        "....ooooooooo...",
+                        "..ooohhoo.......",
+                        ".....ooooooooo..",
+                };
+        // Conversion...
+        String line;
+        for ( int r = 0; r < GameConstants.WORLDSIZE; r++ ) {
+            line = layout[r];
+            for ( int c = 0; c < GameConstants.WORLDSIZE; c++ ) {
+                char tileChar = line.charAt(c);
+                String type = "error";
+                if ( tileChar == '.' ) { type = GameConstants.OCEANS; }
+                if ( tileChar == 'o' ) { type = GameConstants.PLAINS; }
+                if ( tileChar == 'M' ) { type = GameConstants.MOUNTAINS; }
+                if ( tileChar == 'f' ) { type = GameConstants.FOREST; }
+                if ( tileChar == 'h' ) { type = GameConstants.HILLS; }
 
-                if (i == 2 && j == 0) {
-                    units.put(new Position(i, j), new UnitImpl(GameConstants.ARCHER, Player.RED));
-                }
-                if (i == 3 && j == 2) {
-                    units.put(new Position(i, j), new UnitImpl(GameConstants.LEGION, Player.BLUE));
-                }
-                if (i == 4 && j == 3) {
-                    units.put(new Position(i, j), new UnitImpl(GameConstants.SETTLER, Player.RED));
-                }
+                if (r==2 && c==0) { units.put(new Position(r,c), new UnitImpl(GameConstants.ARCHER, Player.RED)); }
+                if (r==3 && c==2) { units.put(new Position(r,c), new UnitImpl(GameConstants.LEGION, Player.BLUE)); }
+                if (r==4 && c==3) { units.put(new Position(r,c), new UnitImpl(GameConstants.SETTLER, Player.RED)); }
 
-                if (i == 1 && j == 1) {
-                    cities.put(new Position(i, j), new CityImpl(Player.RED));
-                }
-                if (i == 8 && j == 12) {
-                    cities.put(new Position(i, j), new CityImpl(Player.RED));
-                }
-                if (i == 4 && j == 5) {
-                    cities.put(new Position(i, j), new CityImpl(Player.BLUE));
-                }
-                if (i == 4 && j == 1) {
-                    cities.put(new Position(i, j), new CityImpl(Player.BLUE));
-                }
+                if (r==8 && c==12) { cities.put(new Position(r,c), new CityImpl(Player.RED)); }
+                if (r==4 && c==5) { cities.put(new Position(r,c), new CityImpl(Player.BLUE)); }
 
-                tiles.put(new Position(i, j), new TileImpl(tileType));
+                Position p = new Position(r,c);
+                tiles.put( p, new TileImpl(type));
             }
         }
         dataTransfer.setTiles(tiles);

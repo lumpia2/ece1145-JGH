@@ -42,8 +42,7 @@ public class TestAlphaCiv {
   /** Fixture for alphaciv testing. */
   @Before
   public void setUp() {
-    game = new GameImpl();
-//    game.createMap();
+    game = new GameImpl(new AlphaWorldLayoutStrategy());
   }
 
   // Comment for hotfix release 2.1

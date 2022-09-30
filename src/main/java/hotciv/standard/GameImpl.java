@@ -4,6 +4,7 @@ import hotciv.framework.*;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 /** Skeleton implementation of HotCiv.
 
@@ -54,10 +55,7 @@ public class GameImpl implements Game {
 
   public GameImpl(WorldLayoutStrategy worldLayoutStrategy) {
     this.age = 4000;
-    WorldLayoutDTO mapData = worldLayoutStrategy.createWorld();
-    this.tiles = mapData.getTiles();
-    this.units = mapData.getUnits();
-    this.cities = mapData.getCities();
+    createWorld(worldLayoutStrategy);
   }
 
   public Tile getTileAt( Position p ) { return tiles.get(p); }
@@ -129,6 +127,47 @@ public class GameImpl implements Game {
   }
 
   public void performUnitActionAt( Position p ) {}
+
+  public void addToWorld( Position p, Unit u ) {
+    if (!units.containsKey(p)) {
+      units.put(p, u);
+    } else {
+      System.out.println(units.get(p).getOwner() + " " + units.get(p).getTypeString() + " unit at this position already...");
+    }
+  }
+
+  public void addToWorld( Position p, City c) {
+    if (!cities.containsKey(p)) {
+      cities.put(p, c);
+    } else {
+      System.out.println(cities.get(p).getOwner() + " city at this position already...");
+    }
+  }
+
+  public void removeFromWorld( Position p, Unit u ) {
+    Unit t = units.get(p);
+    if (units.containsKey(p) && (t.getTypeString() == u.getTypeString()) && (t.getOwner() == u.getOwner())) {
+      units.remove(p);
+    } else {
+      System.out.println(units.get(p).getTypeString() + " does not exist at this position...");
+    }
+  }
+
+  public void removeFromWorld( Position p, City c) {
+    City t = cities.get(p);
+    if (cities.containsKey(p) && (t.getOwner() == c.getOwner())) {
+      cities.remove(p);
+    } else {
+      System.out.println(t.getOwner() + " city does not exist at this position...");
+    }
+  }
+
+  private void createWorld(WorldLayoutStrategy worldLayoutStrategy) {
+    WorldLayoutDTO mapData = worldLayoutStrategy.createWorld();
+    this.tiles = mapData.getTiles();
+    this.units = mapData.getUnits();
+    this.cities = mapData.getCities();
+  }
 
   /**
    * Helper method to find the first available tile to place a specified unit for a city
