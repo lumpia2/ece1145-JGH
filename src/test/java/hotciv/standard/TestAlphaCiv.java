@@ -45,7 +45,7 @@ public class TestAlphaCiv {
   /** Fixture for alphaciv testing. */
   @Before
   public void setUp() {
-    game = new GameImpl(new GammaCivActionStrategy());
+    game = new GameImpl(new AlphaCivActionStrategy(), new AlphaCivMoveUnitStrategy());
     game.createMap();
   }
 
@@ -172,13 +172,10 @@ public class TestAlphaCiv {
   }
 
   @Test
-  public void settlerActionWorks() {
-    game.performUnitActionAt(new Position(4,3));
+  public void settlerDoesNothing() {
+    game.performUnitActionAt(new Position(4, 3));
 
-    assertThat(game.getPlayerInTurn(), is(Player.RED));
-    assertThat(game.getCityAt(new Position(4,3)), is(notNullValue()));
-
-    City redCity = game.getCityAt(new Position(4,3));
-    assertThat(redCity.getOwner(), is(Player.RED));
+    assertThat(game.getCityAt(new Position(4,3)), is(nullValue()));
+    assertEquals(GameConstants.SETTLER, game.getUnitAt(new Position(4,3)).getTypeString());
   }
 }

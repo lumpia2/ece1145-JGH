@@ -34,8 +34,10 @@ import java.util.HashMap;
 public class GameImpl implements Game {
 
   private UnitActionStrategy unitActionStrategy;
-  public GameImpl(UnitActionStrategy unitActionStrategy) {
+  private MoveUnitStrategy moveUnitStrategy;
+  public GameImpl(UnitActionStrategy unitActionStrategy, MoveUnitStrategy moveUnitStrategy) {
     this.unitActionStrategy = unitActionStrategy;
+    this.moveUnitStrategy = moveUnitStrategy;
     this.age = 4000;
   }
 
@@ -65,9 +67,7 @@ public class GameImpl implements Game {
     return age;
   }
 
-  public boolean moveUnit( Position from, Position to ) {
-    return true;
-  }
+  public boolean moveUnit( Position from, Position to ) { return moveUnitStrategy.moveUnit(from, to, units); }
   public void endOfTurn() {
     if (currentPlayer == Player.RED) {
       currentPlayer = Player.BLUE;
