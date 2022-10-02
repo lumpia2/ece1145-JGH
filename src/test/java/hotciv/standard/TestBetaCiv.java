@@ -11,7 +11,7 @@ public class TestBetaCiv {
   /** Fixture for betaciv testing. */
   @Before
   public void setUp() {
-    game = new GameImpl( new BetaAgingStrategy(), new BetaWinningStrategy(), new AlphaWorldLayoutStrategy());
+    game = new GameImpl( new BetaAgingStrategy(), new BetaWinningStrategy(), new AlphaWorldLayoutStrategy(), new AlphaCivActionStrategy(), new AlphaCivMoveUnitStrategy());
   }
 
   @Test

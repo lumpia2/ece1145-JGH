@@ -4,7 +4,7 @@ import hotciv.framework.*;
 import java.util.HashMap;
 
 public class GammaCivActionStrategy implements UnitActionStrategy {
-    public void chooseAction(Position p, HashMap<Position, UnitImpl> units, HashMap<Position, CityImpl> cities) {
+    public void chooseAction(Position p, HashMap<Position, Unit> units, HashMap<Position, City> cities) {
         Player currentPlayer = units.get(p).getOwner();
         Unit unit = units.get(p);
 

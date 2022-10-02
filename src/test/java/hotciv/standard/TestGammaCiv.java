@@ -17,8 +17,7 @@ public class TestGammaCiv {
 
     @Before
     public void setUp() {
-        game = new GameImpl(new GammaCivActionStrategy(), new GammaCivMoveUnitStrategy());
-        game.createMap();
+        game = new GameImpl(new AlphaAgingStrategy(), new AlphaWinningStrategy(), new AlphaWorldLayoutStrategy(), new GammaCivActionStrategy(), new GammaCivMoveUnitStrategy());
     }
 
     @Test
