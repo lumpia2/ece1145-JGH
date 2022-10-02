@@ -4,6 +4,7 @@ import hotciv.framework.*;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 /** Skeleton implementation of HotCiv.
 
@@ -34,18 +35,31 @@ import java.util.Iterator;
 
 public class GameImpl implements Game {
 
-  private HashMap<Position, TileImpl> tiles = new HashMap<>();
-  private HashMap<Position, UnitImpl> units = new HashMap<>();
-
-  private HashMap<Position, CityImpl> cities = new HashMap<>();
+  private HashMap<Position, Tile> tiles = new HashMap<>();
+  private HashMap<Position, Unit> units = new HashMap<>();
+  private HashMap<Position, City> cities = new HashMap<>();
 
   private Player currentPlayer = Player.RED;
+  private AgingStrategy agingStrategy;
+  private WinningStrategy winningStrategy;
+  private UnitActionStrategy unitActionStrategy;
+  private MoveUnitStrategy moveUnitStrategy;
 
   private int age;
 
   public GameImpl()
   {
-    this.age = 4000;
+    this.age = -4000;
+  }
+
+  public GameImpl(AgingStrategy agingStrategy, WinningStrategy winningStrategy, WorldLayoutStrategy worldLayoutStrategy, UnitActionStrategy unitActionStrategy, MoveUnitStrategy moveUnitStrategy)
+  {
+    this.age = -4000;
+    this.agingStrategy = agingStrategy;
+    this.winningStrategy = winningStrategy;
+    this.unitActionStrategy = unitActionStrategy;
+    this.moveUnitStrategy = moveUnitStrategy;
+    createWorld(worldLayoutStrategy);
   }
 
   public Tile getTileAt( Position p ) { return tiles.get(p); }
@@ -54,33 +68,25 @@ public class GameImpl implements Game {
   public Player getPlayerInTurn() { return currentPlayer; }
 
   public Player getWinner() {
-    if(this.getAge() == 3000)
-    {
-      return Player.RED;
-    }
-    else
-    {
-      return null;
-    }
+    return winningStrategy.getWinner(this.getAge(), this.cities);
   }
 
   public int getAge() {
     return age;
   }
 
-  public boolean moveUnit( Position from, Position to ) {
-    return true;
-  }
+  public boolean moveUnit( Position from, Position to ) { return moveUnitStrategy.moveUnit(from, to, units); }
   public void endOfTurn() {
     if (currentPlayer == Player.RED) {
       currentPlayer = Player.BLUE;
     }
     else if (currentPlayer == Player.BLUE) {
       currentPlayer = Player.RED;
-      this.age -= 100;
+      this.age = agingStrategy.ageWorld(this.age);
 
       for (Position i : cities.keySet()) {
         City city = this.getCityAt(i);
+
         int  productionCost = 0;
 
         ((CityImpl) city).incrementTreasury();
@@ -116,31 +122,54 @@ public class GameImpl implements Game {
     ((CityImpl) city).setProduction(unitType);
   }
 
-  public void performUnitActionAt( Position p ) {}
+  public void performUnitActionAt( Position p ) {
+    unitActionStrategy.chooseAction(p, units, cities);
+  }
 
-  public void createMap() {
-
-    for (int i = 0; i < GameConstants.WORLDSIZE; i++) {
-      for (int j = 0; j < GameConstants.WORLDSIZE; j++) {
-        String tileType = GameConstants.PLAINS;
-        if (i == 1 && j == 0) {
-          tileType = GameConstants.OCEANS;
-        } else if (i == 0 && j == 1) {
-          tileType = GameConstants.HILLS;
-        } else if (i == 2 && j == 2) {
-          tileType = GameConstants.MOUNTAINS;
-        }
-
-        if (i==2 && j==0) { units.put(new Position(i,j), new UnitImpl(GameConstants.ARCHER, Player.RED)); }
-        if (i==3 && j==2) { units.put(new Position(i,j), new UnitImpl(GameConstants.LEGION, Player.BLUE)); }
-        if (i==4 && j==3) { units.put(new Position(i,j), new UnitImpl(GameConstants.SETTLER, Player.RED)); }
-
-        if (i==1 && j==1) { cities.put(new Position(i,j), new CityImpl(Player.RED)); }
-        if (i==4 && j==1) { cities.put(new Position(i,j), new CityImpl(Player.BLUE)); }
-
-        tiles.put(new Position(i, j), new TileImpl(tileType));
-      }
+  public void addToWorld( Position p, Unit u ) {
+    if (!units.containsKey(p)) {
+      units.put(p, u);
+    } else {
+      System.out.println(units.get(p).getOwner() + " " + units.get(p).getTypeString() + " unit at this position already...");
     }
+  }
+
+  public void addToWorld( Position p, City c) {
+    if (!cities.containsKey(p)) {
+      cities.put(p, c);
+    } else {
+      System.out.println(cities.get(p).getOwner() + " city at this position already...");
+    }
+  }
+
+  public void removeFromWorld( Position p, Unit u ) {
+    Unit t = units.get(p);
+    if (units.containsKey(p) && (t.getTypeString() == u.getTypeString()) && (t.getOwner() == u.getOwner())) {
+      units.remove(p);
+    } else {
+      System.out.println(units.get(p).getTypeString() + " does not exist at this position...");
+    }
+  }
+
+  public void removeFromWorld( Position p, City c) {
+    City t = cities.get(p);
+    if (cities.containsKey(p) && (t.getOwner() == c.getOwner())) {
+      cities.remove(p);
+    } else {
+      System.out.println(t.getOwner() + " city does not exist at this position...");
+    }
+  }
+
+  /**
+   * Helper method to create world
+   * 
+   * @param worldLayoutStrategy
+   */
+  private void createWorld(WorldLayoutStrategy worldLayoutStrategy) {
+    worldLayoutStrategy.createWorld();
+    this.tiles = worldLayoutStrategy.getTiles();
+    this.units = worldLayoutStrategy.getUnits();
+    this.cities = worldLayoutStrategy.getCities();
   }
 
   /**

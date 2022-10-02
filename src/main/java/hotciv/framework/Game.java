@@ -135,5 +135,10 @@ public interface Game {
    */
   public void performUnitActionAt( Position p );
 
-  public void createMap();
+  public void addToWorld(Position p, Unit u);
+  public void addToWorld(Position p, City c);
+
+  public void removeFromWorld(Position p, Unit u);
+  public void removeFromWorld(Position p, City c);
+
 }
