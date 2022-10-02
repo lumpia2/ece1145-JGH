@@ -1,7 +1,9 @@
 package hotciv.standard;
 
+import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
 import hotciv.framework.Unit;
+import sun.security.x509.OtherName;
 
 public class UnitImpl implements Unit {
     private String type;

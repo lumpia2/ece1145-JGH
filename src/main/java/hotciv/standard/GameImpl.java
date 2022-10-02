@@ -33,19 +33,17 @@ import java.util.HashMap;
 
 public class GameImpl implements Game {
 
-  private HashMap<Position, TileImpl> tiles = new HashMap<>();
-  private HashMap<Position, UnitImpl> units = new HashMap<>();
-
-  private HashMap<Position, CityImpl> cities = new HashMap<>();
-
-  private Player currentPlayer = Player.RED;
-
-  private int age;
-
-  public GameImpl()
-  {
+  private UnitActionStrategy unitActionStrategy;
+  public GameImpl(UnitActionStrategy unitActionStrategy) {
+    this.unitActionStrategy = unitActionStrategy;
     this.age = 4000;
   }
+
+  private HashMap<Position, TileImpl> tiles = new HashMap<>();
+  private HashMap<Position, UnitImpl> units = new HashMap<>();
+  private HashMap<Position, CityImpl> cities = new HashMap<>();
+  private Player currentPlayer = Player.RED;
+  private int age;
 
   public Tile getTileAt( Position p ) { return tiles.get(p); }
   public Unit getUnitAt( Position p ) { return units.get(p); }
@@ -80,7 +78,6 @@ public class GameImpl implements Game {
 
       for (Position i : cities.keySet()) {
         City city = this.getCityAt(i);
-
         ((CityImpl) city).incrementTreasury();
       }
     }
@@ -92,7 +89,9 @@ public class GameImpl implements Game {
     ((CityImpl) city).setProduction(unitType);
   }
 
-  public void performUnitActionAt( Position p ) {}
+  public void performUnitActionAt( Position p ) {
+    unitActionStrategy.chooseAction(p, units, cities);
+  }
 
   public void createMap() {
 
