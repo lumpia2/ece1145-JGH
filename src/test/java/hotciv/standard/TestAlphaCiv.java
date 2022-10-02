@@ -45,10 +45,12 @@ public class TestAlphaCiv {
   /** Fixture for alphaciv testing. */
   @Before
   public void setUp() {
-    game = new GameImpl(new AlphaCivActionStrategy(), new AlphaCivMoveUnitStrategy());
-    game.createMap();
+
+    game = new GameImpl( new AlphaAgingStrategy(), new AlphaWinningStrategy(), new AlphaWorldLayoutStrategy(),new AlphaCivActionStrategy(), new AlphaCivMoveUnitStrategy());
+
   }
 
+  // Comment for hotfix release 2.1
   @Test
   public void productionOfCityIsArcher() {
     City redCity = game.getCityAt(new Position(1,1));
@@ -89,15 +91,15 @@ public class TestAlphaCiv {
 
   // Aging test cases
   @Test
-  public void startingAgeShouldBe4000() {
-      assertThat(game.getAge(), is(4000));
+  public void startingAgeShouldBeNeg4000() {
+      assertThat(game.getAge(), is(-4000));
   }
 
   @Test
   public void endOfRoundAdvancesAge100Years() {
       game.endOfTurn();
       game.endOfTurn();
-      assertThat(game.getAge(), is(3900));
+      assertThat(game.getAge(), is(-3900));
   }
 
   // Winning Test Cases
@@ -169,6 +171,46 @@ public class TestAlphaCiv {
     game.endOfTurn();
     assertThat(redCity.getTreasury(), is(6));
     assertThat(blueCity.getTreasury(), is(6));
+  }
+
+  @Test
+  public void cityProducesArcher() {
+    City redCity = game.getCityAt(new Position(1,1));
+    City blueCity = game.getCityAt(new Position(4,1));
+    game.changeProductionInCityAt(new Position(1,1), GameConstants.ARCHER);
+    game.changeProductionInCityAt(new Position(4,1), GameConstants.ARCHER);
+
+    game.endOfTurn();
+    game.endOfTurn();
+
+    game.endOfTurn();
+    game.endOfTurn();
+
+    assertEquals(GameConstants.ARCHER, game.getUnitAt(new Position(1,1)).getTypeString());
+  }
+
+  @Test
+  public void unitAboveCityWhenCenterOccupied() {
+    City redCity = game.getCityAt(new Position(1,1));
+    game.changeProductionInCityAt(new Position(1,1), GameConstants.ARCHER);
+
+    game.endOfTurn(); game.endOfTurn(); // Treasury 6
+    game.endOfTurn(); game.endOfTurn(); // Treasury 2 unit at center
+    game.endOfTurn(); game.endOfTurn(); // Treasury 8
+    game.endOfTurn(); game.endOfTurn(); // Treasury 4 unit above
+
+    assertEquals(GameConstants.ARCHER, game.getUnitAt(new Position(0,1)).getTypeString());
+  }
+
+  @Test
+  public void cityTreasuryDecreasesWhenUnitProduced() {
+    City redCity = game.getCityAt(new Position(1,1));
+    game.changeProductionInCityAt(new Position(1,1), GameConstants.ARCHER);
+
+    game.endOfTurn(); game.endOfTurn(); // Treasury = 6
+    game.endOfTurn(); game.endOfTurn(); // Treasury = 12 - 10 for archer production
+
+    assertThat(redCity.getTreasury(), is(2));
   }
 
   @Test

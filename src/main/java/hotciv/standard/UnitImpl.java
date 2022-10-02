@@ -18,9 +18,11 @@ public class UnitImpl implements Unit {
         this.defensiveStrength = 1;
     }
 
+    @Override
     public String getTypeString() { return type; }
 
-    public Player getOwner() { return owner;}
+    @Override
+    public Player getOwner() { return owner; }
 
     public int getMoveCount() { return 0; }
 
