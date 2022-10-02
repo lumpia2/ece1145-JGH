@@ -42,7 +42,8 @@ public class GameImpl implements Game {
   private Player currentPlayer = Player.RED;
   private AgingStrategy agingStrategy;
   private WinningStrategy winningStrategy;
-
+  private UnitActionStrategy unitActionStrategy;
+  private MoveUnitStrategy moveUnitStrategy;
 
   private int age;
 
@@ -51,11 +52,13 @@ public class GameImpl implements Game {
     this.age = -4000;
   }
 
-  public GameImpl(AgingStrategy agingStrategy, WinningStrategy winningStrategy, WorldLayoutStrategy worldLayoutStrategy)
+  public GameImpl(AgingStrategy agingStrategy, WinningStrategy winningStrategy, WorldLayoutStrategy worldLayoutStrategy, UnitActionStrategy unitActionStrategy, MoveUnitStrategy moveUnitStrategy)
   {
     this.age = -4000;
     this.agingStrategy = agingStrategy;
     this.winningStrategy = winningStrategy;
+    this.unitActionStrategy = unitActionStrategy;
+    this.moveUnitStrategy = moveUnitStrategy;
     createWorld(worldLayoutStrategy);
   }
 
@@ -72,9 +75,7 @@ public class GameImpl implements Game {
     return age;
   }
 
-  public boolean moveUnit( Position from, Position to ) {
-    return true;
-  }
+  public boolean moveUnit( Position from, Position to ) { return moveUnitStrategy.moveUnit(from, to, units); }
   public void endOfTurn() {
     if (currentPlayer == Player.RED) {
       currentPlayer = Player.BLUE;
@@ -85,6 +86,7 @@ public class GameImpl implements Game {
 
       for (Position i : cities.keySet()) {
         City city = this.getCityAt(i);
+
         int  productionCost = 0;
 
         ((CityImpl) city).incrementTreasury();
@@ -120,7 +122,9 @@ public class GameImpl implements Game {
     ((CityImpl) city).setProduction(unitType);
   }
 
-  public void performUnitActionAt( Position p ) {}
+  public void performUnitActionAt( Position p ) {
+    unitActionStrategy.chooseAction(p, units, cities);
+  }
 
   public void addToWorld( Position p, Unit u ) {
     if (!units.containsKey(p)) {

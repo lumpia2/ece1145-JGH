@@ -3,6 +3,9 @@ package hotciv.standard;
 import hotciv.framework.*;
 
 import org.junit.*;
+
+import javax.annotation.PostConstruct;
+
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
@@ -42,7 +45,9 @@ public class TestAlphaCiv {
   /** Fixture for alphaciv testing. */
   @Before
   public void setUp() {
-    game = new GameImpl( new AlphaAgingStrategy(), new AlphaWinningStrategy(), new AlphaWorldLayoutStrategy());
+
+    game = new GameImpl( new AlphaAgingStrategy(), new AlphaWinningStrategy(), new AlphaWorldLayoutStrategy(),new AlphaCivActionStrategy(), new AlphaCivMoveUnitStrategy());
+
   }
 
   // Comment for hotfix release 2.1
