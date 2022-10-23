@@ -18,8 +18,10 @@
 
 package hotciv.framework;
 
+import hotciv.framework.GameConstants;
+import hotciv.framework.Position;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -57,8 +59,4 @@ public class Utility {
     };
     return iterable;
   }
-
-    public static interface UnitActionStrategy {
-        void chooseAction(Position p, HashMap<Position, Unit> units, HashMap<Position, City> cities);
-    }
 }

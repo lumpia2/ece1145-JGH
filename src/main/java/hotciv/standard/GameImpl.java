@@ -4,6 +4,7 @@ import hotciv.framework.*;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 /** Skeleton implementation of HotCiv.
 
@@ -41,8 +42,8 @@ public class GameImpl implements Game {
   private Player currentPlayer = Player.RED;
   private AgingStrategy agingStrategy;
   private WinningStrategy winningStrategy;
-  private Utility.UnitActionStrategy unitActionStrategy;
-  private Tile.MoveUnitStrategy moveUnitStrategy;
+  private UnitActionStrategy unitActionStrategy;
+  private MoveUnitStrategy moveUnitStrategy;
 
   private int age;
 
@@ -51,7 +52,7 @@ public class GameImpl implements Game {
     this.age = -4000;
   }
 
-  public GameImpl(AgingStrategy agingStrategy, WinningStrategy winningStrategy, WorldLayoutStrategy worldLayoutStrategy, Utility.UnitActionStrategy unitActionStrategy, Tile.MoveUnitStrategy moveUnitStrategy)
+  public GameImpl(AgingStrategy agingStrategy, WinningStrategy winningStrategy, WorldLayoutStrategy worldLayoutStrategy, UnitActionStrategy unitActionStrategy, MoveUnitStrategy moveUnitStrategy)
   {
     this.age = -4000;
     this.agingStrategy = agingStrategy;
