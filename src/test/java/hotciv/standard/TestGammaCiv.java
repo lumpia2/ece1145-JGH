@@ -4,7 +4,6 @@ import hotciv.framework.*;
 
 import org.junit.*;
 
-import javax.annotation.PostConstruct;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
