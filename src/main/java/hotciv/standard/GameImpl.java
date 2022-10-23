@@ -178,26 +178,30 @@ public class GameImpl implements Game {
    * @param c a City to place a unit for
    */
   private void placeUnit(Position p, City c) {
-    Iterator<Position> i8 = Utility.get8neighborhoodIterator(p);
+    Iterator<Position> positionIterator = Utility.get8neighborhoodIterator(p);
+    boolean unitExistsAtPosition = units.containsKey(p);
 
-    if(!units.containsKey(p))
+    if(!unitExistsAtPosition)
     {
       units.put(p, new UnitImpl(c.getProduction(), c.getOwner()));
     }
     else
     {
-      Position nextPosition = i8.next();
+      Position nextPosition = positionIterator.next();
+      unitExistsAtPosition = units.containsKey(nextPosition);
 
-      while(units.containsKey(nextPosition))
+      while(unitExistsAtPosition)
       {
-        if(i8.hasNext())
+        if(positionIterator.hasNext())
         {
-          nextPosition = i8.next();
+          nextPosition = positionIterator.next();
         }
         else
         {
           return;
         }
+
+        unitExistsAtPosition = units.containsKey(nextPosition);
       }
 
       units.put(nextPosition, new UnitImpl(c.getProduction(), c.getOwner()));
