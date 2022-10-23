@@ -1,5 +1,6 @@
 package hotciv.standard;
 
+import hotciv.framework.MoveUnitStrategy;
 import hotciv.framework.Position;
 import hotciv.framework.Unit;
 

@@ -1,4 +1,4 @@
-package hotciv.standard;
+package hotciv.framework;
 
 import hotciv.framework.Position;
 

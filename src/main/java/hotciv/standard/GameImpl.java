@@ -4,7 +4,6 @@ import hotciv.framework.*;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 
 /** Skeleton implementation of HotCiv.
 
