@@ -83,33 +83,38 @@ public class GameImpl implements Game {
       currentPlayer = Player.RED;
       this.age = agingStrategy.ageWorld(this.age);
 
-      for (Position i : cities.keySet()) {
-        City city = this.getCityAt(i);
+      this.updateCities();
+    }
+  }
 
-        int  productionCost = 0;
+  private void updateCities()
+  {
+    for (Position i : cities.keySet()) {
+      City city = this.getCityAt(i);
 
-        ((CityImpl) city).incrementTreasury();
+      int  productionCost = 0;
 
-        if(city.getProduction() != null)
+      ((CityImpl) city).incrementTreasury();
+
+      if(city.getProduction() != null)
+      {
+        switch(city.getProduction()) {
+          case(GameConstants.ARCHER):
+            productionCost = GameConstants.ARCHER_COST;
+            break;
+          case(GameConstants.LEGION):
+            productionCost = GameConstants.LEGION_COST;
+            break;
+          case(GameConstants.SETTLER):
+            productionCost = GameConstants.SETTLER_COST;
+            break;
+        }
+
+        if(city.getTreasury() >= productionCost)
         {
-          switch(city.getProduction()) {
-            case(GameConstants.ARCHER):
-              productionCost = GameConstants.ARCHER_COST;
-              break;
-            case(GameConstants.LEGION):
-              productionCost = GameConstants.LEGION_COST;
-              break;
-            case(GameConstants.SETTLER):
-              productionCost = GameConstants.SETTLER_COST;
-              break;
-          }
+          this.placeUnit(i, city);
 
-          if(city.getTreasury() >= productionCost)
-          {
-            this.placeUnit(i, city);
-
-            ((CityImpl) city).decreaseTreasury(productionCost);
-          }
+          ((CityImpl) city).decreaseTreasury(productionCost);
         }
       }
     }
