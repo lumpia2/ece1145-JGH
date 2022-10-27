@@ -46,11 +46,6 @@ public class GameImpl implements Game {
 
   private int age;
 
-//  public GameImpl()
-//  {
-//    this.age = -4000;
-//  }
-
   public GameImpl(CivFactory TestCivFactory)
   {
     this.age = -4000;
