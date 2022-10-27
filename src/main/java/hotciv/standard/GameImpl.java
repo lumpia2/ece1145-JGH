@@ -46,19 +46,19 @@ public class GameImpl implements Game {
 
   private int age;
 
-  public GameImpl()
-  {
-    this.age = -4000;
-  }
+//  public GameImpl()
+//  {
+//    this.age = -4000;
+//  }
 
-  public GameImpl(AgingStrategy agingStrategy, WinningStrategy winningStrategy, WorldLayoutStrategy worldLayoutStrategy, UnitActionStrategy unitActionStrategy, MoveUnitStrategy moveUnitStrategy)
+  public GameImpl(CivFactory TestCivFactory)
   {
     this.age = -4000;
-    this.agingStrategy = agingStrategy;
-    this.winningStrategy = winningStrategy;
-    this.unitActionStrategy = unitActionStrategy;
-    this.moveUnitStrategy = moveUnitStrategy;
-    createWorld(worldLayoutStrategy);
+    this.agingStrategy = TestCivFactory.createAgingStrategy();
+    this.winningStrategy = TestCivFactory.createWinningStrategy();
+    this.unitActionStrategy = TestCivFactory.createUnitActionStrategy();
+    this.moveUnitStrategy = TestCivFactory.createMoveUnitStrategy();
+    createWorld(TestCivFactory.createWorldLayoutStrategy());
   }
 
   public Tile getTileAt( Position p ) { return tiles.get(p); }
