@@ -45,9 +45,11 @@ public class GameImpl implements Game {
   private MoveUnitStrategy moveUnitStrategy;
 
   private int age;
+  private int round;
 
   public GameImpl(CivFactory TestCivFactory)
   {
+    this.round = 0;
     this.age = -4000;
     this.agingStrategy = TestCivFactory.createAgingStrategy();
     this.winningStrategy = TestCivFactory.createWinningStrategy();
@@ -62,7 +64,7 @@ public class GameImpl implements Game {
   public Player getPlayerInTurn() { return currentPlayer; }
 
   public Player getWinner() {
-    return winningStrategy.getWinner(this.getAge(), this.cities);
+    return winningStrategy.getWinner(this.getAge(), this.cities, this.round);
   }
 
   public int getAge() {
@@ -77,6 +79,7 @@ public class GameImpl implements Game {
     else if (currentPlayer == Player.BLUE) {
       currentPlayer = Player.RED;
       this.age = agingStrategy.ageWorld(this.age);
+      this.round += 1;
 
       this.updateCities();
     }

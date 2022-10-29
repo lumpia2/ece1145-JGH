@@ -18,12 +18,12 @@ public class TestAlphaWinningStrategy {
   @Test
   public void winnerShouldBeNullWhenYearNot3000()
   {
-    assertNull(winningStrategy.getWinner(-4000, null));
+    assertNull(winningStrategy.getWinner(-4000, null, 0));
   }
 
   @Test
   public void winnerShouldBeRedWhenYearNeg3000()
   {
-    assertEquals(Player.RED, winningStrategy.getWinner(-3000, null));
+    assertEquals(Player.RED, winningStrategy.getWinner(-3000, null, 0));
   }
 }

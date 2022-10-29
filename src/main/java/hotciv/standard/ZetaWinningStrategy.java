@@ -7,7 +7,7 @@ import hotciv.framework.WinningStrategy;
 
 import java.util.HashMap;
 
-public class BetaWinningStrategy implements WinningStrategy {
+public class ZetaWinningStrategy implements WinningStrategy {
   @Override
   public Player getWinner(int year, HashMap<Position, City> cities, int round) {
     Player lastOwner = null;
