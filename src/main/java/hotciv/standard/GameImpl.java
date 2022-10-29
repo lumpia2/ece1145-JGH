@@ -4,7 +4,6 @@ import hotciv.framework.*;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 
 /** Skeleton implementation of HotCiv.
 
@@ -47,19 +46,14 @@ public class GameImpl implements Game {
 
   private int age;
 
-  public GameImpl()
+  public GameImpl(CivFactory TestCivFactory)
   {
     this.age = -4000;
-  }
-
-  public GameImpl(AgingStrategy agingStrategy, WinningStrategy winningStrategy, WorldLayoutStrategy worldLayoutStrategy, UnitActionStrategy unitActionStrategy, MoveUnitStrategy moveUnitStrategy)
-  {
-    this.age = -4000;
-    this.agingStrategy = agingStrategy;
-    this.winningStrategy = winningStrategy;
-    this.unitActionStrategy = unitActionStrategy;
-    this.moveUnitStrategy = moveUnitStrategy;
-    createWorld(worldLayoutStrategy);
+    this.agingStrategy = TestCivFactory.createAgingStrategy();
+    this.winningStrategy = TestCivFactory.createWinningStrategy();
+    this.unitActionStrategy = TestCivFactory.createUnitActionStrategy();
+    this.moveUnitStrategy = TestCivFactory.createMoveUnitStrategy();
+    createWorld(TestCivFactory.createWorldLayoutStrategy());
   }
 
   public Tile getTileAt( Position p ) { return tiles.get(p); }
@@ -84,33 +78,38 @@ public class GameImpl implements Game {
       currentPlayer = Player.RED;
       this.age = agingStrategy.ageWorld(this.age);
 
-      for (Position i : cities.keySet()) {
-        City city = this.getCityAt(i);
+      this.updateCities();
+    }
+  }
 
-        int  productionCost = 0;
+  private void updateCities()
+  {
+    for (Position i : cities.keySet()) {
+      City city = this.getCityAt(i);
 
-        ((CityImpl) city).incrementTreasury();
+      int  productionCost = 0;
 
-        if(city.getProduction() != null)
+      ((CityImpl) city).incrementTreasury();
+
+      if(city.getProduction() != null)
+      {
+        switch(city.getProduction()) {
+          case(GameConstants.ARCHER):
+            productionCost = GameConstants.ARCHER_COST;
+            break;
+          case(GameConstants.LEGION):
+            productionCost = GameConstants.LEGION_COST;
+            break;
+          case(GameConstants.SETTLER):
+            productionCost = GameConstants.SETTLER_COST;
+            break;
+        }
+
+        if(city.getTreasury() >= productionCost)
         {
-          switch(city.getProduction()) {
-            case(GameConstants.ARCHER):
-              productionCost = GameConstants.ARCHER_COST;
-              break;
-            case(GameConstants.LEGION):
-              productionCost = GameConstants.LEGION_COST;
-              break;
-            case(GameConstants.SETTLER):
-              productionCost = GameConstants.SETTLER_COST;
-              break;
-          }
+          this.placeUnit(i, city);
 
-          if(city.getTreasury() >= productionCost)
-          {
-            this.placeUnit(i, city);
-
-            ((CityImpl) city).decreaseTreasury(productionCost);
-          }
+          ((CityImpl) city).decreaseTreasury(productionCost);
         }
       }
     }
@@ -180,7 +179,6 @@ public class GameImpl implements Game {
    */
   private void placeUnit(Position p, City c) {
     Iterator<Position> positionIterator = Utility.get8neighborhoodIterator(p);
-
     boolean unitExistsAtPosition = units.containsKey(p);
 
     if(!unitExistsAtPosition)

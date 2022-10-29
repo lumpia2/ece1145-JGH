@@ -4,7 +4,6 @@ import hotciv.framework.*;
 
 import org.junit.*;
 
-import javax.annotation.PostConstruct;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -46,7 +45,7 @@ public class TestAlphaCiv {
   @Before
   public void setUp() {
 
-    game = new GameImpl( new AlphaAgingStrategy(), new AlphaWinningStrategy(), new AlphaWorldLayoutStrategy(),new AlphaCivActionStrategy(), new AlphaCivMoveUnitStrategy());
+    game = new GameImpl(new AlphaCivFactory());
 
   }
 

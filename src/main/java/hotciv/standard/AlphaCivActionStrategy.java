@@ -3,6 +3,7 @@ package hotciv.standard;
 import hotciv.framework.City;
 import hotciv.framework.Position;
 import hotciv.framework.Unit;
+import hotciv.framework.UnitActionStrategy;
 
 import java.util.HashMap;
 
