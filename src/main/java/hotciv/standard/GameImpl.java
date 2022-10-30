@@ -235,4 +235,9 @@ public class GameImpl implements Game {
   {
     return this.getRound();
   }
+
+  public void resetAttackCount()
+  {
+    attackWins.replaceAll((k,v) -> 0);
+  }
 }

@@ -29,6 +29,11 @@ public class ZetaWinningStrategy implements WinningStrategy {
     }
     else if (round == 20)
     {
+      game.resetAttackCount();
+      currentState = epsilonWinningStrategy;
+    }
+    else
+    {
       currentState = epsilonWinningStrategy;
     }
 
