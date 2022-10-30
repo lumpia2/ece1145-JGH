@@ -8,10 +8,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class EpsilonCivMoveUnitStrategy implements MoveUnitStrategy {
     private int A, D, randomNum;
-    private int redWins, blueWins;
 
     @Override
-    public boolean moveUnit(Position from, Position to, HashMap<Position, Unit> units, HashMap<Position, Tile> tiles, HashMap<Position, City> cities, Player winner) {
+    public boolean moveUnit(Position from, Position to, HashMap<Position, Unit> units, HashMap<Position, Tile> tiles, HashMap<Position, City> cities, HashMap<Player, Integer> attackWins) {
         // check if to is empty
         if (!units.containsKey(to)) {
             units.put(to, units.get(from));
@@ -28,6 +27,7 @@ public class EpsilonCivMoveUnitStrategy implements MoveUnitStrategy {
         D *= randomNum;
 
         if (A > D) {
+            incrementWinner(from, units, attackWins);
             units.remove(to);
             units.put(to, units.get(from));
             units.remove(from);
@@ -73,18 +73,18 @@ public class EpsilonCivMoveUnitStrategy implements MoveUnitStrategy {
         return strength;
     }
 
-    private void incrementWinner(Position p, HashMap<Position, Unit> units, Player winner) {
+    private void incrementWinner(Position p, HashMap<Position, Unit> units, HashMap<Player, Integer> attackWins) {
         Unit attacker = units.get(p);
-        Player owner = attacker.getOwner();
+        Player winner = attacker.getOwner();
 
-        if (owner == Player.RED) {
-            redWins++;
-        } else {
-            blueWins++;
+        // check if already a winner
+        for (Integer value : attackWins.values()) {
+            if (value == 3) {
+                return;
+            }
         }
 
-        if (redWins == 3 || blueWins == 3) {
-
-        }
+        int currentWins = attackWins.get(winner);
+        attackWins.put(winner, currentWins++);
     }
 }

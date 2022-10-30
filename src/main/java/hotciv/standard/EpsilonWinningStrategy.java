@@ -3,16 +3,18 @@ package hotciv.standard;
 import hotciv.framework.*;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class EpsilonWinningStrategy implements WinningStrategy {
 
-    private Player winner;
     @Override
-    public Player getWinner(int year, HashMap<Position, City> cities) {
-        return winner;
+    public Player getWinner(int year, HashMap<Position, City> cities, HashMap<Player, Integer> attackWins) {
+        for (Map.Entry<Player, Integer> entry : attackWins.entrySet()) {
+            if (entry.getValue() == 3) {
+                return entry.getKey();
+            }
+        }
+        return null;
     }
 
-    public void setWinner(Player winner) {
-        this.winner = winner;
-    }
 }

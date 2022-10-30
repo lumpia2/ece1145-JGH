@@ -4,7 +4,7 @@ import hotciv.framework.*;
 import java.util.HashMap;
 
 public class GammaCivMoveUnitStrategy implements MoveUnitStrategy {
-    public boolean moveUnit(Position from, Position to, HashMap<Position, Unit> units, HashMap<Position, Tile> tiles, HashMap<Position, City> cities, Player winner) {
+    public boolean moveUnit(Position from, Position to, HashMap<Position, Unit> units, HashMap<Position, Tile> tiles, HashMap<Position, City> cities, HashMap<Player, Integer> attackWins) {
         Unit movingUnit = units.get(from);
 
         if (movingUnit.getTypeString() == GameConstants.ARCHER && ((UnitImpl) movingUnit).getFortified() == true) {
