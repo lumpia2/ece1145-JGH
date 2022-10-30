@@ -8,7 +8,7 @@ import hotciv.framework.Unit;
 public class UnitImpl implements Unit {
     private String type;
     private Player owner;
-    private int defensiveStrength;
+    private int defensiveStrength, attackingStrength;
     private boolean fortified;
 
     public UnitImpl(String type, Player owner) {
@@ -16,6 +16,7 @@ public class UnitImpl implements Unit {
         this.owner = owner;
         this.fortified = false;
         this.defensiveStrength = 1;
+        this.attackingStrength = 1;
     }
 
     @Override
@@ -28,7 +29,7 @@ public class UnitImpl implements Unit {
 
     public int getDefensiveStrength() { return defensiveStrength; }
 
-    public int getAttackingStrength() { return 0;}
+    public int getAttackingStrength() { return attackingStrength;}
 
     public boolean getFortified() { return fortified; }
 

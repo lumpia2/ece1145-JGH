@@ -43,6 +43,7 @@ public class GameImpl implements Game {
   private WinningStrategy winningStrategy;
   private UnitActionStrategy unitActionStrategy;
   private MoveUnitStrategy moveUnitStrategy;
+  private Player winner;
 
   private int age;
   private int round;
@@ -71,7 +72,7 @@ public class GameImpl implements Game {
     return age;
   }
 
-  public boolean moveUnit( Position from, Position to ) { return moveUnitStrategy.moveUnit(from, to, units); }
+  public boolean moveUnit( Position from, Position to ) { return moveUnitStrategy.moveUnit(from, to, units, tiles, cities, winner); }
   public void endOfTurn() {
     if (currentPlayer == Player.RED) {
       currentPlayer = Player.BLUE;

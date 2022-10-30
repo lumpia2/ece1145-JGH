@@ -5,26 +5,24 @@ import hotciv.framework.*;
 public class EpsilonCivFactory implements CivFactory {
     @Override
     public AgingStrategy createAgingStrategy() {
-        return null;
+        return new AlphaAgingStrategy();
     }
 
     @Override
-    public MoveUnitStrategy createMoveUnitStrategy() {
-        return null;
-    }
+    public MoveUnitStrategy createMoveUnitStrategy() { return new EpsilonCivMoveUnitStrategy(); }
 
     @Override
     public UnitActionStrategy createUnitActionStrategy() {
-        return null;
+        return new AlphaCivActionStrategy();
     }
 
     @Override
     public WinningStrategy createWinningStrategy() {
-        return null;
+        return new EpsilonWinningStrategy();
     }
 
     @Override
     public WorldLayoutStrategy createWorldLayoutStrategy() {
-        return null;
+        return new AlphaWorldLayoutStrategy();
     }
 }
