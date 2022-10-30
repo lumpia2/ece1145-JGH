@@ -20,7 +20,7 @@ public class ZetaCivFactory implements CivFactory {
 
     @Override
     public WinningStrategy createWinningStrategy() {
-        return new ZetaWinningStrategy();
+        return new ZetaWinningStrategy(new BetaWinningStrategy(), new EpsilonWinningStrategy());
     }
 
     @Override

@@ -1,5 +1,6 @@
 package hotciv.standard;
 
+import hotciv.framework.Game;
 import hotciv.framework.Player;
 import hotciv.framework.WinningStrategy;
 
@@ -8,22 +9,29 @@ import static org.junit.Assert.*;
 
 public class TestAlphaWinningStrategy {
   private WinningStrategy winningStrategy;
+  private GameImpl game;
 
   @Before
   public void setUp()
   {
     winningStrategy = new AlphaWinningStrategy();
+    game = new GameImpl(new AlphaCivFactory());
   }
 
   @Test
   public void winnerShouldBeNullWhenYearNot3000()
   {
-    assertNull(winningStrategy.getWinner(-4000, null));
+    assertNull(winningStrategy.getWinner(this.game));
   }
 
   @Test
   public void winnerShouldBeRedWhenYearNeg3000()
   {
-    assertEquals(Player.RED, winningStrategy.getWinner(-3000, null));
+    for(int i=0; i<20; i++)
+    {
+      game.endOfTurn();
+    }
+    
+    assertEquals(Player.RED, winningStrategy.getWinner(this.game));
   }
 }

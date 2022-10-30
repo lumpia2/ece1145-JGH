@@ -27,7 +27,7 @@ public class ZetaWinningStrategy implements WinningStrategy {
     {
       currentState = betaWinningStrategy;
     }
-    else
+    else if (round == 20)
     {
       currentState = epsilonWinningStrategy;
     }
