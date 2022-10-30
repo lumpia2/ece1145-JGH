@@ -48,7 +48,6 @@ public class TestAlphaCiv {
     game = new GameImpl(new AlphaCivFactory());
 
   }
-
   // Comment for hotfix release 2.1
   @Test
   public void productionOfCityIsArcher() {

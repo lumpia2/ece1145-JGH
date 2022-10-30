@@ -1,9 +1,7 @@
 package hotciv.framework;
 
-import hotciv.framework.Position;
-
 import java.util.HashMap;
 
 public interface MoveUnitStrategy {
-    boolean moveUnit(Position from, Position to, HashMap<Position, hotciv.framework.Unit> units);
+    boolean moveUnit(Position from, Position to, HashMap<Position, Unit> units, HashMap<Position, Tile> tiles, HashMap<Position, City> cities, Player winner);
 }
