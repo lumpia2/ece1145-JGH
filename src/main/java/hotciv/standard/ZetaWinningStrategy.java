@@ -8,11 +8,28 @@ import hotciv.framework.WinningStrategy;
 import java.util.HashMap;
 
 public class ZetaWinningStrategy implements WinningStrategy {
-  private WinningStrategy betaWinningStrategy = new BetaWinningStrategy();
-  private WinningStrategy EpsilonWinningStrategy = new EpsilonWinningStrategy();
+  private WinningStrategy betaWinningStrategy;
+  private WinningStrategy epsilonWinningStrategy;
+  private WinningStrategy currentState;
+
+  public ZetaWinningStrategy(WinningStrategy betaWinningStrategy, WinningStrategy epsilonWinningStrategy)
+  {
+    this.betaWinningStrategy = betaWinningStrategy;
+    this.epsilonWinningStrategy = epsilonWinningStrategy;
+    this.currentState = null;
+  }
 
   @Override
-  public Player getWinner(int year, HashMap<Position, City> cities) {
+  public Player getWinner(int year, HashMap<Position, City> cities,  HashMap<Player, Integer> attackWins, int round) {
+    if(round < 20)
+    {
+      currentState = betaWinningStrategy;
+    }
+    else
+    {
+      currentState = epsilonWinningStrategy;
+    }
 
+    return currentState.getWinner(year, cities, attackWins, round);
   }
 }
