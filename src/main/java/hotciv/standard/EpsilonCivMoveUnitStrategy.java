@@ -10,16 +10,16 @@ public class EpsilonCivMoveUnitStrategy implements MoveUnitStrategy {
     private int A, D, randomNum;
 
     @Override
-    public boolean moveUnit(Position from, Position to, HashMap<Position, Unit> units, HashMap<Position, Tile> tiles, HashMap<Position, City> cities, HashMap<Player, Integer> attackWins) {
+    public boolean moveUnit(Position from, Position to, GameImpl game) {
         // check if to is empty
-        if (!units.containsKey(to)) {
-            units.put(to, units.get(from));
-            units.remove(from);
+        if (game.getUnitAt(to) == null) {
+            game.addToWorld(to, game.getUnitAt(from));
+            game.removeFromWorld(from, game.getUnitAt(from));
             return true;
         }
 
-        A = calculateTotalStrength(from, units, tiles, cities, true);
-        D = calculateTotalStrength(to, units, tiles, cities, false);
+        A = calculateTotalStrength(from, game, true);
+        D = calculateTotalStrength(to, game, false);
 
         randomNum = ThreadLocalRandom.current().nextInt(1, 7);
         A *= randomNum;
@@ -27,21 +27,21 @@ public class EpsilonCivMoveUnitStrategy implements MoveUnitStrategy {
         D *= randomNum;
 
         if (A > D) {
-            incrementWinner(from, units, attackWins);
-            units.remove(to);
-            units.put(to, units.get(from));
-            units.remove(from);
+            //incrementWinner(from, units, attackWins);
+            game.removeFromWorld(to, game.getUnitAt(to));
+            game.addToWorld(to, game.getUnitAt(from));
+            game.removeFromWorld(from, game.getUnitAt(from));
             return true;
         } else {
-            units.remove(from);
+            game.removeFromWorld(from, game.getUnitAt(from));
             return false;
         }
     }
 
-    private int calculateTotalStrength(Position p, HashMap<Position, Unit> units, HashMap<Position, Tile> tiles,  HashMap<Position, City> cities, boolean Attacking) {
+    private int calculateTotalStrength(Position p, GameImpl game, boolean Attacking) {
         int strength = 0;
-        Tile tile = tiles.get(p);
-        Unit unit = units.get(p);
+        Tile tile = game.getTileAt(p);
+        Unit unit = game.getUnitAt(p);
         Player owner = unit.getOwner();
         Iterator<Position> positionIterator = Utility.get8neighborhoodIterator(p);
 
@@ -55,8 +55,8 @@ public class EpsilonCivMoveUnitStrategy implements MoveUnitStrategy {
         // check supporting strength
         while (positionIterator.hasNext()) {
             Position nextPosition = positionIterator.next();
-            if (units.containsKey(nextPosition)) {
-                Unit support = units.get(nextPosition);
+            if (game.getUnitAt(nextPosition) != null) {
+                Unit support = game.getUnitAt(nextPosition);
                 if (support.getOwner() == owner) {
                     strength++;
                 }
@@ -64,7 +64,7 @@ public class EpsilonCivMoveUnitStrategy implements MoveUnitStrategy {
         }
 
         // check terrain factor
-        if (cities.get(p) != null) {
+        if (game.getCityAt(p) != null) {
             strength *= 3;
         } else if (tile.getTypeString() == "forest" || tile.getTypeString() == "hills") {
             strength *= 2;
@@ -72,19 +72,19 @@ public class EpsilonCivMoveUnitStrategy implements MoveUnitStrategy {
 
         return strength;
     }
-
-    private void incrementWinner(Position p, HashMap<Position, Unit> units, HashMap<Player, Integer> attackWins) {
-        Unit attacker = units.get(p);
-        Player winner = attacker.getOwner();
-
-        // check if already a winner
-        for (Integer value : attackWins.values()) {
-            if (value == 3) {
-                return;
-            }
-        }
-
-        int currentWins = attackWins.get(winner);
-        attackWins.put(winner, currentWins++);
-    }
+//
+//    private void incrementWinner(Position p, GameImpl game) {
+//        Unit attacker = game.getUnitAt(p);
+//        Player winner = attacker.getOwner();
+//
+//        // check if already a winner
+//        for (Integer value : attackWins.values()) {
+//            if (value == 3) {
+//                return;
+//            }
+//        }
+//
+//        int currentWins = attackWins.get(winner);
+//        attackWins.put(winner, currentWins++);
+//    }
 }

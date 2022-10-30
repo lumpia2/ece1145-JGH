@@ -74,7 +74,7 @@ public class GameImpl implements Game {
     return age;
   }
 
-  public boolean moveUnit( Position from, Position to ) { return moveUnitStrategy.moveUnit(from, to, units, tiles, cities, attackWins); }
+  public boolean moveUnit( Position from, Position to ) { return moveUnitStrategy.moveUnit(from, to, this); }
   public void endOfTurn() {
     if (currentPlayer == Player.RED) {
       currentPlayer = Player.BLUE;
