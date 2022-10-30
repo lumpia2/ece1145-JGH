@@ -20,7 +20,9 @@ public class ZetaWinningStrategy implements WinningStrategy {
   }
 
   @Override
-  public Player getWinner(int year, HashMap<Position, City> cities,  HashMap<Player, Integer> attackWins, int round) {
+  public Player getWinner(GameImpl game) {
+    int round = game.getRound();
+    
     if(round < 20)
     {
       currentState = betaWinningStrategy;
@@ -30,6 +32,6 @@ public class ZetaWinningStrategy implements WinningStrategy {
       currentState = epsilonWinningStrategy;
     }
 
-    return currentState.getWinner(year, cities, attackWins, round);
+    return currentState.getWinner(game);
   }
 }

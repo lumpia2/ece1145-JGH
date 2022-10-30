@@ -67,7 +67,7 @@ public class GameImpl implements Game {
   public Player getPlayerInTurn() { return currentPlayer; }
 
   public Player getWinner() {
-    return winningStrategy.getWinner(this.getAge(), this.cities, this.attackWins, this.round);
+    return winningStrategy.getWinner(this);
   }
 
   public int getAge() {
@@ -219,5 +219,20 @@ public class GameImpl implements Game {
     attackWins.put(Player.BLUE, 0);
     attackWins.put(Player.GREEN, 0);
     attackWins.put(Player.YELLOW, 0);
+  }
+
+  public HashMap<Position, City> getCities()
+  {
+    return this.cities;
+  }
+
+  public HashMap<Player, Integer> getAttackWins()
+  {
+    return this.attackWins;
+  }
+
+  public int getRound()
+  {
+    return this.getRound();
   }
 }

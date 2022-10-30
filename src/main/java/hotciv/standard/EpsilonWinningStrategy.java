@@ -8,7 +8,8 @@ import java.util.Map;
 public class EpsilonWinningStrategy implements WinningStrategy {
 
     @Override
-    public Player getWinner(int year, HashMap<Position, City> cities, HashMap<Player, Integer> attackWins, int round) {
+    public Player getWinner(GameImpl game) {
+        HashMap<Player, Integer> attackWins = game.getAttackWins();
         for (Map.Entry<Player, Integer> entry : attackWins.entrySet()) {
             if (entry.getValue() == 3) {
                 return entry.getKey();
