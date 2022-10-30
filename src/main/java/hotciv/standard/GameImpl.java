@@ -37,6 +37,7 @@ public class GameImpl implements Game {
   private HashMap<Position, Tile> tiles = new HashMap<>();
   private HashMap<Position, Unit> units = new HashMap<>();
   private HashMap<Position, City> cities = new HashMap<>();
+  private HashMap<Player, Integer> attackWins = new HashMap<>();
 
   private Player currentPlayer = Player.RED;
   private AgingStrategy agingStrategy;
@@ -55,6 +56,7 @@ public class GameImpl implements Game {
     this.unitActionStrategy = TestCivFactory.createUnitActionStrategy();
     this.moveUnitStrategy = TestCivFactory.createMoveUnitStrategy();
     createWorld(TestCivFactory.createWorldLayoutStrategy());
+    createWinnerList(attackWins);
   }
 
   public Tile getTileAt( Position p ) { return tiles.get(p); }
@@ -63,14 +65,14 @@ public class GameImpl implements Game {
   public Player getPlayerInTurn() { return currentPlayer; }
 
   public Player getWinner() {
-    return winningStrategy.getWinner(this.getAge(), this.cities);
+    return winningStrategy.getWinner(this.getAge(), this.cities, this.attackWins);
   }
 
   public int getAge() {
     return age;
   }
 
-  public boolean moveUnit( Position from, Position to ) { return moveUnitStrategy.moveUnit(from, to, units, tiles, cities, winner); }
+  public boolean moveUnit( Position from, Position to ) { return moveUnitStrategy.moveUnit(from, to, units, tiles, cities, attackWins); }
   public void endOfTurn() {
     if (currentPlayer == Player.RED) {
       currentPlayer = Player.BLUE;
@@ -207,5 +209,12 @@ public class GameImpl implements Game {
 
       units.put(nextPosition, new UnitImpl(c.getProduction(), c.getOwner()));
     }
+  }
+
+  private void createWinnerList(HashMap<Player, Integer> attackWins) {
+    attackWins.put(Player.RED, 0);
+    attackWins.put(Player.BLUE, 0);
+    attackWins.put(Player.GREEN, 0);
+    attackWins.put(Player.YELLOW, 0);
   }
 }
