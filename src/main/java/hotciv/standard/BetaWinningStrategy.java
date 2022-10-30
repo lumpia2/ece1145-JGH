@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 public class BetaWinningStrategy implements WinningStrategy {
   @Override
-  public Player getWinner(int year, HashMap<Position, City> cities, int round) {
+  public Player getWinner(int year, HashMap<Position, City> cities) {
     Player lastOwner = null;
 
     for(City city : cities.values())

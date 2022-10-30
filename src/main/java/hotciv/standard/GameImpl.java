@@ -65,7 +65,7 @@ public class GameImpl implements Game {
   public Player getPlayerInTurn() { return currentPlayer; }
 
   public Player getWinner() {
-    return winningStrategy.getWinner(this.getAge(), this.cities, this.round);
+    return winningStrategy.getWinner(this.getAge(), this.cities);
   }
 
   public int getAge() {

@@ -27,7 +27,7 @@ public class TestBetaWinningStrategy {
     cities.put(new Position(1,1), new CityImpl(Player.RED));
     cities.put(new Position(1,2), new CityImpl(Player.BLUE));
 
-    assertNull(winningStrategy.getWinner(0, cities, 0));
+    assertNull(winningStrategy.getWinner(0, cities));
   }
 
   @Test
@@ -37,6 +37,6 @@ public class TestBetaWinningStrategy {
     cities.put(new Position(1,1), new CityImpl(Player.RED));
     cities.put(new Position(1,2), new CityImpl(Player.RED));
 
-    assertEquals(Player.RED, winningStrategy.getWinner(0, cities, 0));
+    assertEquals(Player.RED, winningStrategy.getWinner(0, cities));
   }
 }
