@@ -37,28 +37,28 @@ public class GameImpl implements Game {
   private HashMap<Position, Tile> tiles = new HashMap<>();
   private HashMap<Position, Unit> units = new HashMap<>();
   private HashMap<Position, City> cities = new HashMap<>();
+  private HashMap<Player, Integer> attackWins = new HashMap<>();
 
   private Player currentPlayer = Player.RED;
   private AgingStrategy agingStrategy;
   private WinningStrategy winningStrategy;
   private UnitActionStrategy unitActionStrategy;
   private MoveUnitStrategy moveUnitStrategy;
+  private Player winner;
 
   private int age;
+  private int round;
 
-  public GameImpl()
+  public GameImpl(CivFactory TestCivFactory)
   {
+    this.round = 0;
     this.age = -4000;
-  }
-
-  public GameImpl(AgingStrategy agingStrategy, WinningStrategy winningStrategy, WorldLayoutStrategy worldLayoutStrategy, UnitActionStrategy unitActionStrategy, MoveUnitStrategy moveUnitStrategy)
-  {
-    this.age = -4000;
-    this.agingStrategy = agingStrategy;
-    this.winningStrategy = winningStrategy;
-    this.unitActionStrategy = unitActionStrategy;
-    this.moveUnitStrategy = moveUnitStrategy;
-    createWorld(worldLayoutStrategy);
+    this.agingStrategy = TestCivFactory.createAgingStrategy();
+    this.winningStrategy = TestCivFactory.createWinningStrategy();
+    this.unitActionStrategy = TestCivFactory.createUnitActionStrategy();
+    this.moveUnitStrategy = TestCivFactory.createMoveUnitStrategy();
+    createWorld(TestCivFactory.createWorldLayoutStrategy());
+    createWinnerList(attackWins);
   }
 
   public Tile getTileAt( Position p ) { return tiles.get(p); }
@@ -67,14 +67,14 @@ public class GameImpl implements Game {
   public Player getPlayerInTurn() { return currentPlayer; }
 
   public Player getWinner() {
-    return winningStrategy.getWinner(this.getAge(), this.cities);
+    return winningStrategy.getWinner(this);
   }
 
   public int getAge() {
     return age;
   }
 
-  public boolean moveUnit( Position from, Position to ) { return moveUnitStrategy.moveUnit(from, to, units); }
+  public boolean moveUnit( Position from, Position to ) { return moveUnitStrategy.moveUnit(from, to, this); }
   public void endOfTurn() {
     if (currentPlayer == Player.RED) {
       currentPlayer = Player.BLUE;
@@ -82,6 +82,7 @@ public class GameImpl implements Game {
     else if (currentPlayer == Player.BLUE) {
       currentPlayer = Player.RED;
       this.age = agingStrategy.ageWorld(this.age);
+      this.round += 1;
 
       this.updateCities();
     }
@@ -212,4 +213,32 @@ public class GameImpl implements Game {
       units.put(nextPosition, new UnitImpl(c.getProduction(), c.getOwner()));
     }
   }
+
+  private void createWinnerList(HashMap<Player, Integer> attackWins) {
+    attackWins.put(Player.RED, 0);
+    attackWins.put(Player.BLUE, 0);
+    attackWins.put(Player.GREEN, 0);
+    attackWins.put(Player.YELLOW, 0);
+  }
+
+  public HashMap<Position, City> getCities()
+  {
+    return this.cities;
+  }
+
+  public HashMap<Player, Integer> getAttackWins()
+  {
+    return this.attackWins;
+  }
+
+  public int getRound()
+  {
+    return this.getRound();
+  }
+
+  public void resetAttackCount()
+  {
+    attackWins.replaceAll((k,v) -> 0);
+  }
+
 }

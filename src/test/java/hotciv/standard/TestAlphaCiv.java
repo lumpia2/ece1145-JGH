@@ -45,10 +45,9 @@ public class TestAlphaCiv {
   @Before
   public void setUp() {
 
-    game = new GameImpl( new AlphaAgingStrategy(), new AlphaWinningStrategy(), new AlphaWorldLayoutStrategy(),new AlphaCivActionStrategy(), new AlphaCivMoveUnitStrategy());
+    game = new GameImpl(new AlphaCivFactory());
 
   }
-
   // Comment for hotfix release 2.1
   @Test
   public void productionOfCityIsArcher() {

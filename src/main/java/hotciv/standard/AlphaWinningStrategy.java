@@ -9,8 +9,8 @@ import java.util.HashMap;
 
 public class AlphaWinningStrategy implements WinningStrategy {
   @Override
-  public Player getWinner(int year, HashMap<Position, City> cities) {
-    if(year == -3000)
+  public Player getWinner(GameImpl game) {
+    if(game.getAge() == -3000)
     {
       return Player.RED;
     }

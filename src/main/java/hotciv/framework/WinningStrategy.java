@@ -1,7 +1,9 @@
 package hotciv.framework;
 
+import hotciv.standard.GameImpl;
+
 import java.util.HashMap;
 
 public interface WinningStrategy {
-  public Player getWinner(int year, HashMap<Position, City> cities);
+  public Player getWinner(GameImpl game);
 }
