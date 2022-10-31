@@ -1,22 +1,20 @@
 package hotciv.standard;
 
-import hotciv.framework.City;
 import hotciv.framework.Player;
-import hotciv.framework.Position;
 import hotciv.framework.WinningStrategy;
-
-import java.util.HashMap;
 
 public class ZetaWinningStrategy implements WinningStrategy {
   private WinningStrategy betaWinningStrategy;
   private WinningStrategy epsilonWinningStrategy;
   private WinningStrategy currentState;
+  private boolean hasBeenReset;
 
   public ZetaWinningStrategy(WinningStrategy betaWinningStrategy, WinningStrategy epsilonWinningStrategy)
   {
     this.betaWinningStrategy = betaWinningStrategy;
     this.epsilonWinningStrategy = epsilonWinningStrategy;
     this.currentState = null;
+    this.hasBeenReset = false;
   }
 
   @Override
