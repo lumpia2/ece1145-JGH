@@ -233,12 +233,12 @@ public class GameImpl implements Game {
 
   public int getRound()
   {
-    return this.getRound();
+    return this.round;
   }
 
   public void resetAttackCount()
   {
-    attackWins.replaceAll((k,v) -> 0);
+    this.attackWins.replaceAll((k,v) -> 0);
   }
 
 }
