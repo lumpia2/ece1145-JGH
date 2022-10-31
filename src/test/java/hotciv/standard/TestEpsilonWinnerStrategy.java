@@ -19,21 +19,21 @@ public class TestEpsilonWinnerStrategy {
 
     @Test
     public void threeWinsWins() {
-        EpsilonCivMoveUnitStrategy.incrementWinner((GameImpl)game, Player.RED);
-        EpsilonCivMoveUnitStrategy.incrementWinner((GameImpl)game, Player.RED);
-        EpsilonCivMoveUnitStrategy.incrementWinner((GameImpl)game, Player.RED);
+        Utility2.incrementWinner((GameImpl)game, Player.RED);
+        Utility2.incrementWinner((GameImpl)game, Player.RED);
+        Utility2.incrementWinner((GameImpl)game, Player.RED);
 
         assertThat(game.getWinner(), is(Player.RED));
     }
 
     @Test
     public void firstToThreeWinsWins() {
-        EpsilonCivMoveUnitStrategy.incrementWinner((GameImpl)game, Player.RED);
-        EpsilonCivMoveUnitStrategy.incrementWinner((GameImpl)game, Player.RED);
-        EpsilonCivMoveUnitStrategy.incrementWinner((GameImpl)game, Player.RED);
-        EpsilonCivMoveUnitStrategy.incrementWinner((GameImpl)game, Player.BLUE);
-        EpsilonCivMoveUnitStrategy.incrementWinner((GameImpl)game, Player.BLUE);
-        EpsilonCivMoveUnitStrategy.incrementWinner((GameImpl)game, Player.BLUE);
+        Utility2.incrementWinner((GameImpl)game, Player.RED);
+        Utility2.incrementWinner((GameImpl)game, Player.RED);
+        Utility2.incrementWinner((GameImpl)game, Player.RED);
+        Utility2.incrementWinner((GameImpl)game, Player.BLUE);
+        Utility2.incrementWinner((GameImpl)game, Player.BLUE);
+        Utility2.incrementWinner((GameImpl)game, Player.BLUE);
 
         assertThat(game.getWinner(), is(Player.RED));
     }
