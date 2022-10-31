@@ -5,7 +5,7 @@ import hotciv.framework.*;
 import java.util.HashMap;
 
 public class AlphaCivMoveUnitStrategy implements MoveUnitStrategy {
-    public boolean moveUnit(Position from, Position to, GameImpl game) {
+    public boolean moveUnit(Position from, Position to, Game game) {
         return true;
     }
 }

@@ -10,7 +10,7 @@ public class EpsilonCivMoveUnitStrategy implements MoveUnitStrategy {
     private int A, D, randomNum;
 
     @Override
-    public boolean moveUnit(Position from, Position to, GameImpl game) {
+    public boolean moveUnit(Position from, Position to, Game game) {
         // check if to is empty
         if (game.getUnitAt(to) == null) {
             game.addToWorld(to, game.getUnitAt(from));
@@ -27,7 +27,7 @@ public class EpsilonCivMoveUnitStrategy implements MoveUnitStrategy {
         D *= randomNum;
 
         if (A > D) {
-            //incrementWinner(from, units, attackWins);
+            incrementWinner((GameImpl)game, game.getPlayerInTurn());
             game.removeFromWorld(to, game.getUnitAt(to));
             game.addToWorld(to, game.getUnitAt(from));
             game.removeFromWorld(from, game.getUnitAt(from));
@@ -38,7 +38,7 @@ public class EpsilonCivMoveUnitStrategy implements MoveUnitStrategy {
         }
     }
 
-    private int calculateTotalStrength(Position p, GameImpl game, boolean Attacking) {
+    public static int calculateTotalStrength(Position p, Game game, boolean Attacking) {
         int strength = 0;
         Tile tile = game.getTileAt(p);
         Unit unit = game.getUnitAt(p);
@@ -72,19 +72,18 @@ public class EpsilonCivMoveUnitStrategy implements MoveUnitStrategy {
 
         return strength;
     }
-//
-//    private void incrementWinner(Position p, GameImpl game) {
-//        Unit attacker = game.getUnitAt(p);
-//        Player winner = attacker.getOwner();
-//
-//        // check if already a winner
-//        for (Integer value : attackWins.values()) {
-//            if (value == 3) {
-//                return;
-//            }
-//        }
-//
-//        int currentWins = attackWins.get(winner);
-//        attackWins.put(winner, currentWins++);
-//    }
+
+    public static void incrementWinner(GameImpl game, Player winner) {
+        HashMap<Player, Integer> attackWins = game.getAttackWins();
+
+        // check if already a winner
+        for (Integer value : attackWins.values()) {
+            if (value == 3) {
+                return;
+            }
+        }
+
+        int currentWins = attackWins.get(winner);
+        attackWins.put(winner, currentWins+1);
+    }
 }
