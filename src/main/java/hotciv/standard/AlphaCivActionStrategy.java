@@ -8,6 +8,6 @@ import hotciv.framework.UnitActionStrategy;
 import java.util.HashMap;
 
 public class AlphaCivActionStrategy implements UnitActionStrategy {
-    public void chooseAction(Position p, HashMap<Position, Unit> units, HashMap<Position, City> cities) {
+    public void chooseAction(Position p, GameImpl game) {
     }
 }

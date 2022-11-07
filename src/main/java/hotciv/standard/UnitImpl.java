@@ -15,7 +15,12 @@ public class UnitImpl implements Unit {
         this.type = type;
         this.owner = owner;
         this.fortified = false;
-        this.defensiveStrength = 1;
+
+        if (this.type == GameConstants.UFO) {
+            this.defensiveStrength = 8;
+        } else {
+            this.defensiveStrength = 1;
+        }
         this.attackingStrength = 1;
     }
 

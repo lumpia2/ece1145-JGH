@@ -109,6 +109,9 @@ public class GameImpl implements Game {
           case(GameConstants.SETTLER):
             productionCost = GameConstants.SETTLER_COST;
             break;
+          case(GameConstants.UFO):
+            productionCost = GameConstants.UFO_COST;
+            break;
         }
 
         if(city.getTreasury() >= productionCost)
@@ -128,7 +131,7 @@ public class GameImpl implements Game {
   }
 
   public void performUnitActionAt( Position p ) {
-    unitActionStrategy.chooseAction(p, units, cities);
+    unitActionStrategy.chooseAction(p, this);
   }
 
   public void addToWorld( Position p, Unit u ) {
@@ -139,11 +142,19 @@ public class GameImpl implements Game {
     }
   }
 
-  public void addToWorld( Position p, City c) {
+  public void addToWorld( Position p, City c ) {
     if (!cities.containsKey(p)) {
       cities.put(p, c);
     } else {
       System.out.println(cities.get(p).getOwner() + " city at this position already...");
+    }
+  }
+
+  public void addToWorld( Position p, Tile t ) {
+    if (!tiles.containsKey(t)) {
+      tiles.put(p, t);
+    } else {
+      System.out.println(tiles.get(p).getTypeString() + " tile at this position already...");
     }
   }
 
@@ -162,6 +173,15 @@ public class GameImpl implements Game {
       cities.remove(p);
     } else {
       System.out.println(t.getOwner() + " city does not exist at this position...");
+    }
+  }
+
+  public void removeFromWorld( Position p, Tile t ) {
+    Tile c = tiles.get(p);
+    if (tiles.containsKey(p) && (t.getTypeString() == c.getTypeString())) {
+      tiles.remove(p);
+    } else {
+      System.out.println(t.getTypeString() + " tile does not exist at this position...");
     }
   }
 
