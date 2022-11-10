@@ -2,6 +2,8 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 
+import java.util.HashMap;
+
 public class GameTranscriptDecorator implements Game {
     private Game game;
 
@@ -56,7 +58,13 @@ public class GameTranscriptDecorator implements Game {
     {
         Player winner = game.getWinner();
 
-        System.out.println(winner.toString() + " is the winner.");
+        if (winner != null)
+        {
+            System.out.println(winner.toString() + " is the winner.");
+        } else
+        {
+            System.out.println("No one is the winner yet.");
+        }
 
         return winner;
     }
