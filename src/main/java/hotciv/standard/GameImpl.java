@@ -59,6 +59,7 @@ public class GameImpl implements Game {
     this.moveUnitStrategy = TestCivFactory.createMoveUnitStrategy();
     createWorld(TestCivFactory.createWorldLayoutStrategy());
     createWinnerList(attackWins);
+    this.resetMoveCounts();
   }
 
   public Tile getTileAt( Position p ) { return tiles.get(p); }
@@ -85,6 +86,7 @@ public class GameImpl implements Game {
       this.round += 1;
 
       this.updateCities();
+      this.resetMoveCounts();
     }
   }
 
@@ -118,6 +120,14 @@ public class GameImpl implements Game {
           ((CityImpl) city).decreaseTreasury(productionCost);
         }
       }
+    }
+  }
+
+  private void resetMoveCounts()
+  {
+    for(Position i : units.keySet()){
+      Unit unit = this.getUnitAt(i);
+      ((UnitImpl) unit).resetMoveCount();
     }
   }
 

@@ -42,7 +42,9 @@ public class AlphaCivMoveUnitStrategy implements MoveUnitStrategy {
         {
             Unit fromUnit = game.getUnitAt(from);
             game.addToWorld(to, fromUnit);
+            ((UnitImpl) fromUnit).decreaseMoveCount();
             game.removeFromWorld(from, fromUnit);
+            return true;
         }
 
         // If unit at destination, remove unit at destination. add from unit to destination, and remove from origin
@@ -52,10 +54,11 @@ public class AlphaCivMoveUnitStrategy implements MoveUnitStrategy {
             Unit fromUnit = game.getUnitAt(from);
             game.removeFromWorld(to, toUnit);
             game.addToWorld(to, fromUnit);
+            ((UnitImpl) fromUnit).decreaseMoveCount();
             game.removeFromWorld(from, fromUnit);
-
+            return true;
         }
 
-        return true;
+        return false;
     }
 }
