@@ -10,7 +10,7 @@ public class EpsilonCivMoveUnitStrategy implements MoveUnitStrategy {
     private int A, D, randomNum;
     private Utility2 utility2;
     @Override
-    public boolean moveUnit(Position from, Position to, GameImpl game) {
+    public boolean moveUnit(Position from, Position to, Game game) {
         // check if to is empty
         boolean noMountain = (game.getTileAt(to).getTypeString() != GameConstants.MOUNTAINS);
         if (!noMountain) {
@@ -30,7 +30,7 @@ public class EpsilonCivMoveUnitStrategy implements MoveUnitStrategy {
         D *= randomNum;
 
         if (A > D) {
-            utility2.incrementWinner(game, game.getPlayerInTurn());
+            utility2.incrementWinner((GameImpl) game, game.getPlayerInTurn());
             game.removeFromWorld(to, game.getUnitAt(to));
             game.addToWorld(to, game.getUnitAt(from));
             game.removeFromWorld(from, game.getUnitAt(from));

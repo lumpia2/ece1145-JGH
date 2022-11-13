@@ -35,11 +35,11 @@ public class TestGammaCiv {
         game.performUnitActionAt(new Position(2,0));
 
         assertThat(game.getPlayerInTurn(), is(Player.RED));
-        assertThat(game.moveUnit(new Position(2, 0), new Position(4, 0)), is(false));
+        assertThat(game.moveUnit(new Position(2, 0), new Position(3, 0)), is(false));
         Unit redArcher = game.getUnitAt(new Position(2, 0));
         assertThat(redArcher.getDefensiveStrength(), is(2));
 
         game.performUnitActionAt(new Position(2,0));
-        assertThat(game.moveUnit(new Position(2, 0), new Position(4, 0)), is(true));
+        assertThat(game.moveUnit(new Position(2, 0), new Position(3, 0)), is(true));
     }
 }

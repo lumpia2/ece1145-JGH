@@ -35,10 +35,14 @@ public class TestThetaCiv {
     @Test
     public void abductionWorks() {
         Unit testUFO = new UnitImpl(GameConstants.UFO, Player.RED);
-        game.addToWorld(new Position(3,3), testUFO);
+        game.addToWorld(new Position(3,1), testUFO);
+
+        // go back to red
+        game.endOfTurn();
+        game.endOfTurn();
 
         assertThat(game.getCityAt(new Position(4,1)), notNullValue());
-        game.moveUnit(new Position(3,3), new Position(4,1));
+        assertThat(game.moveUnit(new Position(3,1), new Position(4,1)), is(true));
         game.performUnitActionAt(new Position(4,1));
         assertEquals(game.getCityAt(new Position(4,1)), null);
     }
@@ -47,7 +51,11 @@ public class TestThetaCiv {
     public void deforestation() {
         Unit testUFO = new UnitImpl(GameConstants.UFO, Player.RED);
         game.addToWorld(new Position(3,3), testUFO);
-        
+
+        // go back to red
+        game.endOfTurn();
+        game.endOfTurn();
+
         Tile oldTile = game.getTileAt(new Position(3,4));
         Tile forest = new TileImpl(GameConstants.FOREST);
         ((GameImpl) game).removeFromWorld(new Position(3,4), oldTile);
@@ -55,7 +63,54 @@ public class TestThetaCiv {
 
         assertEquals(game.getTileAt(new Position(3,4)).getTypeString(), GameConstants.FOREST);
         game.moveUnit(new Position(3,3), new Position(3,4));
+
+        // go back to red
+        game.endOfTurn();
+        game.endOfTurn();
+
         game.performUnitActionAt(new Position(3,4));
         assertEquals(game.getTileAt(new Position(3,4)).getTypeString(), GameConstants.PLAINS);
     }
+
+    @Test
+    public void canMoveTwoUnitsUFO() {
+        Unit testUFO = new UnitImpl(GameConstants.UFO, Player.RED);
+        game.addToWorld(new Position(3,3), testUFO);
+
+        // go back to red
+        game.endOfTurn();
+        game.endOfTurn();
+
+        assertThat(game.moveUnit(new Position(3,3), new Position(5,5)), is(true));
+    }
+
+    @Test
+    public void cannotMoveThreeUnitsUFO() {
+        Unit testUFO = new UnitImpl(GameConstants.UFO, Player.RED);
+        game.addToWorld(new Position(3,3), testUFO);
+
+        // go back to red
+        game.endOfTurn();
+        game.endOfTurn();
+
+        assertThat(game.moveUnit(new Position(3,3), new Position(6,6)), is(false));
+    }
+
+    @Test
+    public void blueCityWithSettlerGetsBattled() {
+        Unit testUFO = new UnitImpl(GameConstants.UFO, Player.RED);
+        game.addToWorld(new Position(3,1), testUFO);
+        game.endOfTurn();
+
+        Unit newBlueSettler = new UnitImpl(GameConstants.SETTLER, Player.BLUE);
+        game.addToWorld(new Position(4,1), newBlueSettler);
+        game.endOfTurn();
+
+        Unit blueSettler = game.getUnitAt(new Position(4,1));
+        assertThat(blueSettler.getTypeString(), is(GameConstants.SETTLER));
+
+        assertThat(game.moveUnit(new Position(3,1), new Position(4,1)), is(true));
+        Unit winningUnit = game.getUnitAt(new Position(4,1));
+        assertThat(winningUnit.getTypeString(), is(GameConstants.UFO));
+k    }
 }

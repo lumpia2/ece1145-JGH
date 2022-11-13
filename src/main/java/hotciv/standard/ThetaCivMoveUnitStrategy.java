@@ -7,7 +7,7 @@ import hotciv.standard.UnitImpl;
 import java.util.HashMap;
 import java.lang.Math;
 
-public class GammaCivMoveUnitStrategy implements MoveUnitStrategy {
+public class ThetaCivMoveUnitStrategy implements MoveUnitStrategy {
     public boolean moveUnit(Position from, Position to, Game game) {
         // If no unit at origin return false
         if(game.getUnitAt(from)==null)
@@ -54,10 +54,17 @@ public class GammaCivMoveUnitStrategy implements MoveUnitStrategy {
             return false;
         }
 
-        // If trying to move more than 1 tile return false
-        if(Math.abs(to.getRow() - from.getRow()) > 1 || Math.abs(to.getColumn() - from.getColumn()) > 1)
-        {
-            return false;
+        // Check if moving < 1 unit if not UFO, < 2 if UFO
+        if(game.getUnitAt(from).getTypeString() == GameConstants.UFO) {
+            if(Math.abs(to.getRow() - from.getRow()) > 2 || Math.abs(to.getColumn() - from.getColumn()) > 2)
+            {
+                return false;
+            }
+        } else {
+            if(Math.abs(to.getRow() - from.getRow()) > 1 || Math.abs(to.getColumn() - from.getColumn()) > 1)
+            {
+                return false;
+            }
         }
 
         // If no unit at destination add unit at destination and remove from origin
@@ -85,4 +92,3 @@ public class GammaCivMoveUnitStrategy implements MoveUnitStrategy {
         return false;
     }
 }
-
