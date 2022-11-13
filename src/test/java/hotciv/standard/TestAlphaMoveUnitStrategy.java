@@ -100,6 +100,21 @@ public class TestAlphaMoveUnitStrategy {
     assertTrue(moveUnitStrategy.moveUnit(new Position(1,1), new Position(1,2), game));
     assertNull(game.getUnitAt(new Position(1,1)));
     assertNotNull(game.getUnitAt(new Position(1,2)));
+    game.endOfTurn();game.endOfTurn();
+    assertTrue(moveUnitStrategy.moveUnit(new Position(1,2), new Position(1,1), game));
+  }
+
+  @Test
+  public void moveFalseIfDestinationOutOfBounds()
+  {
+    Unit unit1 = new UnitImpl(GameConstants.ARCHER, Player.RED);
+    game.addToWorld(new Position(0,0), unit1);
+    game.addToWorld(new Position(15,15), unit1);
+    game.endOfTurn(); game.endOfTurn();
+    assertFalse(moveUnitStrategy.moveUnit(new Position(0,0), new Position(-1,0), game));
+    assertFalse(moveUnitStrategy.moveUnit(new Position(0,0), new Position(0,-1), game));
+    assertFalse(moveUnitStrategy.moveUnit(new Position(15,15), new Position(15,16), game));
+    assertFalse(moveUnitStrategy.moveUnit(new Position(15,15), new Position(16,15), game));
   }
 
 }

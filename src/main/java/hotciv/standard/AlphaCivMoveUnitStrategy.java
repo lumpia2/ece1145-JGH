@@ -13,6 +13,16 @@ public class AlphaCivMoveUnitStrategy implements MoveUnitStrategy {
             return false;
         }
 
+        if(to.getColumn() < 0 || to.getColumn() >= GameConstants.WORLDSIZE)
+        {
+            return false;
+        }
+
+        if(to.getRow() < 0 || to.getRow() >= GameConstants.WORLDSIZE)
+        {
+            return false;
+        }
+
         // If trying to move to mountains or ocean return false
         if(game.getTileAt(to).getTypeString().equals(GameConstants.MOUNTAINS) || game.getTileAt(to).getTypeString().equals(GameConstants.OCEANS))
         {
