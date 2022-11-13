@@ -1,16 +1,16 @@
 package hotciv.standard;
+import java.io.*;
 
 import hotciv.framework.*;
-import java.util.HashMap;
 
 public class GammaCivActionStrategy implements UnitActionStrategy {
-    public void chooseAction(Position p, HashMap<Position, Unit> units, HashMap<Position, City> cities) {
-        Player currentPlayer = units.get(p).getOwner();
-        Unit unit = units.get(p);
+    public void chooseAction(Position p, GameImpl game) {
+        Player currentPlayer = game.getPlayerInTurn();
+        Unit unit = game.getUnitAt(p);
 
         if (unit.getTypeString() == GameConstants.SETTLER) {
-            units.remove(p);
-            cities.put(p, new CityImpl(currentPlayer));
+            game.removeFromWorld(p, unit);
+            game.addToWorld(p, new CityImpl(currentPlayer));
         } else if (unit.getTypeString() == GameConstants.ARCHER) {
             ((UnitImpl) unit).toggleFortified();
             ((UnitImpl) unit).doubleDefensiveStrength();

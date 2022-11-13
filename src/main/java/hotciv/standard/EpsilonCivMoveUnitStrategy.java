@@ -12,7 +12,10 @@ public class EpsilonCivMoveUnitStrategy implements MoveUnitStrategy {
     @Override
     public boolean moveUnit(Position from, Position to, Game game) {
         // check if to is empty
-        if (game.getUnitAt(to) == null) {
+        boolean noMountain = (game.getTileAt(to).getTypeString() != GameConstants.MOUNTAINS);
+        if (!noMountain) {
+            return false;
+        } else if (game.getUnitAt(to) == null) {
             game.addToWorld(to, game.getUnitAt(from));
             game.removeFromWorld(from, game.getUnitAt(from));
             return true;

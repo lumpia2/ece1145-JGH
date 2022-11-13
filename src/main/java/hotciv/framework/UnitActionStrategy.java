@@ -1,9 +1,8 @@
 package hotciv.framework;
 
 import hotciv.framework.*;
-
-import java.util.HashMap;
+import hotciv.standard.GameImpl;
 
 public interface UnitActionStrategy {
-    void chooseAction(Position p, HashMap<Position, Unit> units, HashMap<Position, City> cities);
+    void chooseAction(Position p, GameImpl game);
 }

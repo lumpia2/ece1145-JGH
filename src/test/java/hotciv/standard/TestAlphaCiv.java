@@ -138,7 +138,11 @@ public class TestAlphaCiv {
 
   @Test
   public void attackerAlwaysWins() {
-    assertThat(game.moveUnit(new Position(2,0 ), new Position(3, 2)), is(true));
+    game.moveUnit(new Position(2, 0), new Position(3, 0));
+    game.endOfTurn(); game.endOfTurn();
+    game.moveUnit(new Position(3, 0), new Position(3, 1));
+    game.endOfTurn(); game.endOfTurn();
+    assertThat(game.moveUnit(new Position(3,1 ), new Position(3, 2)), is(true));
   }
 
   @Test

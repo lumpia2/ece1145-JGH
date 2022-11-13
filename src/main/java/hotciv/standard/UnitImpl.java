@@ -10,12 +10,18 @@ public class UnitImpl implements Unit {
     private Player owner;
     private int defensiveStrength, attackingStrength;
     private boolean fortified;
+    private int moveCount;
 
     public UnitImpl(String type, Player owner) {
         this.type = type;
         this.owner = owner;
         this.fortified = false;
-        this.defensiveStrength = 1;
+
+        if (this.type == GameConstants.UFO) {
+            this.defensiveStrength = 8;
+        } else {
+            this.defensiveStrength = 1;
+        }
         this.attackingStrength = 1;
     }
 
@@ -25,7 +31,7 @@ public class UnitImpl implements Unit {
     @Override
     public Player getOwner() { return owner; }
 
-    public int getMoveCount() { return 0; }
+    public int getMoveCount() { return this.moveCount; }
 
     public int getDefensiveStrength() { return defensiveStrength; }
 
@@ -43,5 +49,13 @@ public class UnitImpl implements Unit {
             return true;
         }
         return false;
+    }
+
+    public void decreaseMoveCount() {
+        moveCount--;
+    }
+
+    public void resetMoveCount() {
+        moveCount = 1;
     }
 }

@@ -10,10 +10,12 @@ public class CityImpl implements City {
     private String workForceFocus;
     private String production;
     private int treasury;
+    private int population;
     private Player owner;
 
     public CityImpl(Player owner) {
         this.owner = owner;
+        this.population = 1;
     }
     // Member functions
     @Override
@@ -41,6 +43,10 @@ public class CityImpl implements City {
         return workForceFocus;
     }
 
+    public int getPopulation() {
+        return population;
+    }
+
     // Mutator functions
     public void incrementTreasury() { treasury+=6; }
 
@@ -51,6 +57,8 @@ public class CityImpl implements City {
     public void decreaseTreasury(int cost) {
         treasury -= cost;
     }
+
+    public void decrementPopulation() { population -= 1; }
 
     public void setOwner(Player owner) {
         this.owner = owner;
