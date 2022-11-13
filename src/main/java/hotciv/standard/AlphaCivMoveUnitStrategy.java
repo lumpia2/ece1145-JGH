@@ -7,6 +7,12 @@ import java.lang.Math;
 
 public class AlphaCivMoveUnitStrategy implements MoveUnitStrategy {
     public boolean moveUnit(Position from, Position to, Game game) {
+        // If no unit at origin return false
+        if(game.getUnitAt(from)==null)
+        {
+            return false;
+        }
+
         // If trying to move to mountains or ocean return false
         if(game.getTileAt(to).getTypeString().equals(GameConstants.MOUNTAINS) || game.getTileAt(to).getTypeString().equals(GameConstants.OCEANS))
         {
