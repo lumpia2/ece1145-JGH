@@ -20,7 +20,14 @@ public class GameTranscriptDecorator implements Game {
     {
         Tile currTile = game.getTileAt(p);
 
-        System.out.println(currTile.toString() + " at " + p.toString() + ".");
+        if (currTile != null)
+        {
+            System.out.println(currTile.toString() + " at " + p.toString() + ".");
+
+        } else
+        {
+            System.out.println("Tile doesn't exist at " + p.toString() + ".");
+        }
 
         return currTile;
     }
@@ -30,7 +37,14 @@ public class GameTranscriptDecorator implements Game {
     {
         Unit currUnit = game.getUnitAt(p);
 
-        System.out.println(currUnit.toString() + " at " + p.toString() + ".");
+        if (currUnit != null)
+        {
+            System.out.println(currUnit.toString() + " at " + p.toString() + ".");
+        } else
+        {
+            System.out.println("No unit at " + p.toString() + ".");
+        }
+
         return currUnit;
     }
 
@@ -39,7 +53,14 @@ public class GameTranscriptDecorator implements Game {
     {
         City currCity = game.getCityAt(p);
 
-        System.out.println(currCity.toString() + " at " + p.toString() + ".");
+        if (currCity != null)
+        {
+            System.out.println(currCity.toString() + " at " + p.toString() + ".");
+        } else
+        {
+            System.out.println("No city at " + p.toString() + ".");
+        }
+
         return currCity;
     }
 
