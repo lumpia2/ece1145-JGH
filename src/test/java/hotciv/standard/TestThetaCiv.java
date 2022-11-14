@@ -112,5 +112,5 @@ public class TestThetaCiv {
         assertThat(game.moveUnit(new Position(3,1), new Position(4,1)), is(true));
         Unit winningUnit = game.getUnitAt(new Position(4,1));
         assertThat(winningUnit.getTypeString(), is(GameConstants.UFO));
-k    }
+    }
 }
