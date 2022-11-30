@@ -191,4 +191,12 @@ public class GameTranscriptDecorator implements Game {
 
         game.removeFromWorld(p, c);
     }
+
+    public void addObserver(GameObserver observer) {
+
+    }
+
+    public void setTileFocus(Position position) {
+
+    }
 }
