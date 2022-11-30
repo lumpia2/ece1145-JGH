@@ -27,9 +27,94 @@ apply plugin: 'jacoco'
 
 repositories {
     mavenCentral()
+    jcenter()
 }
     
 dependencies {
+    implementation 'com.baerbak.maven:minidraw:1.13'
+
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.hamcrest:hamcrest-library:1.3'
+}
+
+task show(type: JavaExec) {
+    group 'HotCiv Demonstration'
+    description 'Demonstrate MapView'
+
+    main = 'hotciv.visual.ShowWorld'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task text(type: JavaExec) {
+    group 'HotCiv Demonstration'
+    description 'Demonstrate TextFigure'
+
+    main = 'hotciv.visual.ShowText'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task city(type: JavaExec) {
+    group 'HotCiv Demonstration'
+    description 'Demonstrate CityFigure'
+
+    main = 'hotciv.visual.ShowCity'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+// === Placeholders for YOUR work on solving SWEA exercises
+
+task update(type: JavaExec) {
+    group 'Project'
+    description 'Test partial CivDrawing implementation (and partial solution for FRS 36.38)'
+
+    main = 'hotciv.visual.ShowUpdating'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task move(type: JavaExec) {
+    group 'Project'
+    description 'Test UnitMoveTool, FRS 36.39'
+
+    main = 'hotciv.visual.ShowMove'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task setfocus(type: JavaExec) {
+    group 'Project'
+    description 'Test SetFocusTool, FRS 36.40'
+
+    main = 'hotciv.visual.ShowSetFocus'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task turn(type: JavaExec) {
+    group 'Project'
+    description 'Test EndOfTurnTool, FRS 36.42'
+
+    main = 'hotciv.visual.ShowEndOfTurn'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task action(type: JavaExec) {
+    group 'Project'
+    description 'Test ActionTool, FRS 36.43'
+
+    main = 'hotciv.visual.ShowAction'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task comp(type: JavaExec) {
+    group 'Project'
+    description 'Test CompositionTool, FRS 36.44'
+
+    main = 'hotciv.visual.ShowComposition'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task semi(type: JavaExec) {
+    group 'Project'
+    description ' Play SemiCiv using the GUI :-)'
+
+    main = 'hotciv.visual.NotDefinedYet'
+    classpath = sourceSets.main.runtimeClasspath
 }
