@@ -144,7 +144,7 @@ public class StubGame2 implements Game {
   public void removeFromWorld(Position p, Unit u) {
 
   }
-  
+
   public void removeFromWorld(Position p, City c) {
 
   }
