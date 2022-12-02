@@ -186,6 +186,14 @@ public class GameImpl implements Game {
     }
   }
 
+  public void addObserver(GameObserver observer) {
+
+  }
+
+  public void setTileFocus(Position position) {
+
+  }
+
   public void removeFromWorld( Position p, Tile t ) {
     Tile c = tiles.get(p);
     if (tiles.containsKey(p) && (t.getTypeString() == c.getTypeString())) {
