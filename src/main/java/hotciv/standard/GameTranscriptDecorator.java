@@ -161,6 +161,9 @@ public class GameTranscriptDecorator implements Game {
     }
 
     @Override
+    public void addObserver(GameObserver observer) {};
+
+    @Override
     public void addToWorld(Position p, Unit u)
     {
         System.out.println(u.toString() + " added at " + p.toString() + ".");

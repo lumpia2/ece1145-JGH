@@ -135,6 +135,13 @@ public interface Game {
    */
   public void performUnitActionAt( Position p );
 
+  /** add an observer on this game instance. The game
+   * instance acts as 'subject' in the pattern.
+   * @param observer the observer to notify in case of
+   * state changes.
+   */
+  public void addObserver(GameObserver observer);
+
   public void addToWorld(Position p, Unit u);
   public void addToWorld(Position p, City c);
 

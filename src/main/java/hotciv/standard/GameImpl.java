@@ -45,6 +45,7 @@ public class GameImpl implements Game {
   private UnitActionStrategy unitActionStrategy;
   private MoveUnitStrategy moveUnitStrategy;
   private Player winner;
+  private GameObserver observer;
 
   private int age;
   private int round;
@@ -143,6 +144,10 @@ public class GameImpl implements Game {
   public void performUnitActionAt( Position p ) {
     unitActionStrategy.chooseAction(p, this);
   }
+
+  public void addObserver(GameObserver observer) {
+    this.observer = observer;
+  };
 
   public void addToWorld( Position p, Unit u ) {
     if (!units.containsKey(p)) {
