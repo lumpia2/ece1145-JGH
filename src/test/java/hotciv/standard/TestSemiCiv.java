@@ -149,9 +149,9 @@ public class TestSemiCiv {
     assertThat(game.moveUnit(new Position(2, 0), new Position(4, 0)), is(false));
     Unit redArcher = game.getUnitAt(new Position(2, 0));
     assertThat(redArcher.getDefensiveStrength(), is(2));
-
+    game.endOfTurn();game.endOfTurn();
     game.performUnitActionAt(new Position(2,0));
-    assertThat(game.moveUnit(new Position(2, 0), new Position(4, 0)), is(true));
+    assertThat(game.moveUnit(new Position(2, 0), new Position(3, 1)), is(true));
   }
 
   // DELTA world layout
