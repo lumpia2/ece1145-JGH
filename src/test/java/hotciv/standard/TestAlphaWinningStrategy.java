@@ -1,9 +1,11 @@
 package hotciv.standard;
 
-import hotciv.framework.Game;
 import hotciv.framework.Player;
 import hotciv.framework.WinningStrategy;
 
+import hotciv.standard.factories.AlphaCivFactory;
+import hotciv.standard.implementations.GameImpl;
+import hotciv.standard.winningStrategies.AlphaWinningStrategy;
 import org.junit.*;
 import static org.junit.Assert.*;
 
