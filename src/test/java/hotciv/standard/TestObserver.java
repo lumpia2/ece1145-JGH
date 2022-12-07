@@ -2,7 +2,11 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 
-import minidraw.boardgame.PositioningStrategy;
+import hotciv.standard.factories.AlphaCivFactory;
+import hotciv.standard.implementations.CityImpl;
+import hotciv.standard.implementations.GameImpl;
+import hotciv.standard.implementations.TestSpyObserverImpl;
+import hotciv.standard.implementations.UnitImpl;
 import org.junit.*;
 
 

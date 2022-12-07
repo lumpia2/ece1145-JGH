@@ -1,6 +1,10 @@
 package hotciv.standard;
 
 import hotciv.framework.*;
+import hotciv.standard.factories.AlphaCivFactory;
+import hotciv.standard.implementations.GameImpl;
+import hotciv.standard.implementations.UnitImpl;
+import hotciv.standard.moveUnitStrategies.AlphaCivMoveUnitStrategy;
 import org.junit.*;
 import static org.junit.Assert.*;
 

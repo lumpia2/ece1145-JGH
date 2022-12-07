@@ -2,13 +2,13 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 
+import hotciv.standard.factories.AlphaCivFactory;
+import hotciv.standard.implementations.GameImpl;
 import org.junit.*;
 
 
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
-
-import java.util.*;
 
 /** Skeleton class for AlphaCiv test cases
 

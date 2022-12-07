@@ -2,6 +2,7 @@ package hotciv.standard;
 
 import hotciv.framework.AgingStrategy;
 
+import hotciv.standard.agingStrategies.BetaAgingStrategy;
 import org.junit.*;
 import static org.junit.Assert.*;
 

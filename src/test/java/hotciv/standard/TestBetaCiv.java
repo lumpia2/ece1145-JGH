@@ -2,6 +2,9 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 
+import hotciv.standard.factories.BetaCivFactory;
+import hotciv.standard.implementations.CityImpl;
+import hotciv.standard.implementations.GameImpl;
 import org.junit.*;
 import static org.junit.Assert.*;
 

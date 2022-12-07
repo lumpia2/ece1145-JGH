@@ -2,6 +2,9 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 
+import hotciv.standard.factories.DeltaCivFactory;
+import hotciv.standard.implementations.GameImpl;
+import hotciv.standard.implementations.UnitImpl;
 import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
