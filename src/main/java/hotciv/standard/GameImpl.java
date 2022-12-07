@@ -45,6 +45,7 @@ public class GameImpl implements Game {
   private UnitActionStrategy unitActionStrategy;
   private MoveUnitStrategy moveUnitStrategy;
   private Player winner;
+  private GameObserver observer;
 
   private int age;
   private int round;
@@ -75,10 +76,19 @@ public class GameImpl implements Game {
     return age;
   }
 
-  public boolean moveUnit( Position from, Position to ) { return moveUnitStrategy.moveUnit(from, to, this); }
+  public boolean moveUnit( Position from, Position to ) {
+          if (moveUnitStrategy.moveUnit(from, to, this)) {
+            observer.worldChangedAt(from);
+            observer.worldChangedAt(to);
+            return true;
+          } else {
+            return false;
+          }
+  }
   public void endOfTurn() {
     if (currentPlayer == Player.RED) {
       currentPlayer = Player.BLUE;
+      observer.turnEnds(Player.RED, this.age);
     }
     else if (currentPlayer == Player.BLUE) {
       currentPlayer = Player.RED;
@@ -87,6 +97,7 @@ public class GameImpl implements Game {
 
       this.updateCities();
       this.resetMoveCounts();
+      observer.turnEnds(Player.BLUE, this.age);
     }
   }
 
@@ -144,9 +155,14 @@ public class GameImpl implements Game {
     unitActionStrategy.chooseAction(p, this);
   }
 
+  public void addObserver(GameObserver observer) {
+    this.observer = observer;
+  };
+
   public void addToWorld( Position p, Unit u ) {
     if (!units.containsKey(p)) {
       units.put(p, u);
+      observer.worldChangedAt(p);
     } else {
       System.out.println(units.get(p).getOwner() + " " + units.get(p).getTypeString() + " unit at this position already...");
     }
@@ -155,6 +171,7 @@ public class GameImpl implements Game {
   public void addToWorld( Position p, City c ) {
     if (!cities.containsKey(p)) {
       cities.put(p, c);
+      observer.worldChangedAt(p);
     } else {
       System.out.println(cities.get(p).getOwner() + " city at this position already...");
     }
@@ -163,6 +180,7 @@ public class GameImpl implements Game {
   public void addToWorld( Position p, Tile t ) {
     if (!tiles.containsKey(t)) {
       tiles.put(p, t);
+      observer.worldChangedAt(p);
     } else {
       System.out.println(tiles.get(p).getTypeString() + " tile at this position already...");
     }
@@ -172,6 +190,7 @@ public class GameImpl implements Game {
     Unit t = units.get(p);
     if (units.containsKey(p) && (t.getTypeString() == u.getTypeString()) && (t.getOwner() == u.getOwner())) {
       units.remove(p);
+      observer.worldChangedAt(p);
     } else {
       System.out.println(units.get(p).getTypeString() + " does not exist at this position...");
     }
@@ -181,23 +200,21 @@ public class GameImpl implements Game {
     City t = cities.get(p);
     if (cities.containsKey(p) && (t.getOwner() == c.getOwner())) {
       cities.remove(p);
+      observer.worldChangedAt(p);
     } else {
       System.out.println(t.getOwner() + " city does not exist at this position...");
     }
   }
 
-  public void addObserver(GameObserver observer) {
-
-  }
-
   public void setTileFocus(Position position) {
-
+    observer.tileFocusChangedAt(position);
   }
 
   public void removeFromWorld( Position p, Tile t ) {
     Tile c = tiles.get(p);
     if (tiles.containsKey(p) && (t.getTypeString() == c.getTypeString())) {
       tiles.remove(p);
+      observer.worldChangedAt(p);
     } else {
       System.out.println(t.getTypeString() + " tile does not exist at this position...");
     }
@@ -228,6 +245,7 @@ public class GameImpl implements Game {
     if(!unitExistsAtPosition)
     {
       units.put(p, new UnitImpl(c.getProduction(), c.getOwner()));
+      observer.worldChangedAt(p);
     }
     else
     {
@@ -249,6 +267,7 @@ public class GameImpl implements Game {
       }
 
       units.put(nextPosition, new UnitImpl(c.getProduction(), c.getOwner()));
+      observer.worldChangedAt(nextPosition);
     }
   }
 
