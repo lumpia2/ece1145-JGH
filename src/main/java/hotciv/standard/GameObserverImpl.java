@@ -6,6 +6,11 @@ import hotciv.framework.Position;
 
 public class GameObserverImpl implements GameObserver {
 
+    Position changedPos;
+    Position focusedPos;
+    Player nextPlayer;
+    int age;
+
     public GameObserverImpl() {}
     @Override
     public void worldChangedAt(Position pos) {

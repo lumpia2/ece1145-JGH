@@ -153,7 +153,6 @@ public interface Game {
    * @param observer the observer to notify in case of
    * state changes.
    */
-  public void addObserver(GameObserver observer);
 
   /** set the focus on a specific tile. This will
    * result in an event being broadcast to all
