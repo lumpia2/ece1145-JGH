@@ -16,7 +16,7 @@ public class ActionTool extends NullTool {
     this.game = game;
   }
 
-  public void MouseDown(MouseEvent e, int x, int y)
+  public void mouseDown(MouseEvent e, int x, int y)
   {
     if(e.isShiftDown())
     {
@@ -24,6 +24,7 @@ public class ActionTool extends NullTool {
       if(game.getUnitAt(p) != null)
       {
         game.performUnitActionAt(p);
+        System.out.println("Unit Action Performed at" + p.toString());
       }
     }
   }
