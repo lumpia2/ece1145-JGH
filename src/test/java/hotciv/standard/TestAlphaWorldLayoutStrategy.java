@@ -2,9 +2,9 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 
+import hotciv.standard.worldLayoutStrategies.AlphaWorldLayoutStrategy;
 import org.junit.*;
 import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
 
 public class TestAlphaWorldLayoutStrategy {
     private WorldLayoutStrategy worldLayout;

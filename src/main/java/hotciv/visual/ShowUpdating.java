@@ -1,8 +1,10 @@
 package hotciv.visual;
+import hotciv.framework.GameObserver;
 
 import hotciv.framework.Game;
 import hotciv.framework.Position;
 import hotciv.stub.StubGame2;
+import hotciv.view.CivDrawing;
 import minidraw.framework.*;
 import minidraw.standard.*;
 
@@ -33,6 +35,9 @@ public class ShowUpdating {
     DrawingEditor editor = 
       new MiniDrawApplication( "Click anywhere to see Drawing updates",  
                                new HotCivFactory4(game) );
+
+    GameObserver observer = new CivDrawing(editor, game);
+
     editor.open();
     editor.setTool( new UpdateTool(editor, game) );
 

@@ -2,6 +2,10 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 
+import hotciv.standard.factories.ZetaCivFactory;
+import hotciv.standard.implementations.CityImpl;
+import hotciv.standard.implementations.GameImpl;
+import hotciv.standard.utilities.Utility2;
 import org.junit.*;
 
 import static org.hamcrest.CoreMatchers.is;
