@@ -37,7 +37,8 @@ public class CityFigure extends ImageFigure {
   private Point position;
 
   public CityFigure(City c, Point p) {
-    super("city", p); 
+    super("city", p);
+    System.out.print("making new city");
     position = p;
     city = c;
   }
