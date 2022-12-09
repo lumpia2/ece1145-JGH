@@ -2,7 +2,7 @@ package hotciv.visual;
 
 import hotciv.framework.Game;
 import hotciv.stub.StubGame2;
-import hotciv.view.EndOfTurnTool;
+import hotciv.view.tool.EndOfTurnTool;
 import minidraw.framework.*;
 import minidraw.standard.*;
 

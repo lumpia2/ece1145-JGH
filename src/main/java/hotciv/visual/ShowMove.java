@@ -2,7 +2,7 @@ package hotciv.visual;
 
 import hotciv.framework.Game;
 import hotciv.stub.StubGame2;
-import hotciv.view.MoveTool;
+import hotciv.view.tool.MoveTool;
 import minidraw.framework.*;
 import minidraw.standard.*;
 
