@@ -11,28 +11,17 @@ import java.awt.event.MouseEvent;
 
 public class EndOfTurnTool extends NullTool {
     private Game game;
-    private DrawingEditor editor;
-    protected Position turnShield =
-            GfxConstants.getPositionFromXY(GfxConstants.TURN_SHIELD_X, GfxConstants.TURN_SHIELD_Y);
 
 
-    public  EndOfTurnTool(DrawingEditor editor, Game game) {
-        this.editor = editor;
+    public EndOfTurnTool(Game game) {
         this.game = game;
     }
 
-    public void mouseUp(MouseEvent e, int x, int y) {
-        Drawing model = editor.drawing();
+    public void mouseDown(MouseEvent e, int x, int y) {
+        boolean xShield = (x >= 560) && (x <= 588);
+        boolean yShield = (y >= 65) && (y <= 104);
 
-        model.lock();
-
-
-
-        Position p = GfxConstants.getPositionFromXY(x,y);
-
-        if (p == turnShield) {
+        if (xShield && yShield)
             game.endOfTurn();
-            // change shield to player color
-        }
     }
 }
