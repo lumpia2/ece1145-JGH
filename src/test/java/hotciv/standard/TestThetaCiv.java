@@ -2,6 +2,10 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 
+import hotciv.standard.factories.ThetaCivFactory;
+import hotciv.standard.implementations.GameImpl;
+import hotciv.standard.implementations.TileImpl;
+import hotciv.standard.implementations.UnitImpl;
 import org.junit.*;
 
 import static org.hamcrest.CoreMatchers.is;
