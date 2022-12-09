@@ -42,7 +42,11 @@ public class StubGame2 implements Game {
   private Position pos_settler_red;
   private Position pos_ufo_red;
 
+  private Position pos_city_red;
+
   private Unit red_archer;
+
+  private City city_red;
 
   public Unit getUnitAt(Position p) {
     if ( p.equals(pos_archer_red) ) {
@@ -100,8 +104,11 @@ public class StubGame2 implements Game {
     pos_settler_red = new Position( 4, 3);
     pos_ufo_red = new Position( 6, 4);
 
+
     // the only one I need to store for this stub
-    red_archer = new StubUnit( GameConstants.ARCHER, Player.RED );   
+    red_archer = new StubUnit( GameConstants.ARCHER, Player.RED );
+
+    pos_city_red = new Position(5,5);
 
     inTurn = Player.RED;
   }
@@ -126,7 +133,13 @@ public class StubGame2 implements Game {
   }
 
   // TODO: Add more stub behaviour to test MiniDraw updating
-  public City getCityAt( Position p ) { return null; }
+  public City getCityAt( Position p ) {
+    if ( p.equals(pos_city_red) ) {
+      System.out.print(p);
+      return city_red;
+    }
+    return null;
+  }
   public Player getWinner() { return null; }
   public int getAge() { return 0; }  
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
@@ -138,7 +151,9 @@ public class StubGame2 implements Game {
   }
 
   public void addToWorld(Position p, City c) {
-
+    city_red = new StubCity(Player.RED);
+    System.out.print("Adding city");
+    gameObserver.worldChangedAt(p);
   }
 
   public void removeFromWorld(Position p, Unit u) {
@@ -169,4 +184,33 @@ class StubUnit implements  Unit {
   public int getMoveCount() { return 1; }
   public int getDefensiveStrength() { return 0; }
   public int getAttackingStrength() { return 0; }
+}
+
+class StubCity implements City {
+  private Player owner;
+  public StubCity(Player owner) {
+    this.owner = Player.RED;
+  }
+
+  public Player getOwner() { return owner; }
+
+  @Override
+  public int getSize() {
+    return 0;
+  }
+
+  @Override
+  public int getTreasury() {
+    return 0;
+  }
+
+  @Override
+  public String getProduction() {
+    return null;
+  }
+
+  @Override
+  public String getWorkforceFocus() {
+    return null;
+  }
 }

@@ -2,6 +2,7 @@ package hotciv.visual;
 import hotciv.framework.GameObserver;
 
 import hotciv.framework.Game;
+import hotciv.framework.City;
 import hotciv.framework.Position;
 import hotciv.stub.StubGame2;
 import hotciv.view.CivDrawing;
@@ -18,7 +19,7 @@ import java.awt.event.MouseEvent;
        Using Patterns and Agile Development"
      published 2010 by CRC Press.
    Author: 
-     Henrik B Christensen 
+     Henrik B Christensen
      Computer Science Department
      Aarhus University
    
@@ -55,6 +56,7 @@ public class ShowUpdating {
  * of the 'from Domain to GUI' data flow is coded correctly*/
 class UpdateTool extends NullTool {
   private Game game;
+  private City city;
   private DrawingEditor editor;
   public UpdateTool(DrawingEditor editor, Game game) {
     this.editor = editor;
@@ -86,6 +88,11 @@ class UpdateTool extends NullTool {
     case 4: {
       editor.showStatus( "State change: Inspect Unit at (4,3)" );
       game.setTileFocus(new Position(4,3));
+      break;
+    }
+    case 5: {
+      editor.showStatus( "State change: Add city at {5,5}" );
+      game.addToWorld(new Position(5,5), city);
       break;
     }
       // TODO: Add more state changes for other things to test
