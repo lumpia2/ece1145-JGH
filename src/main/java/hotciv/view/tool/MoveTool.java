@@ -39,17 +39,16 @@ public class MoveTool extends SelectionTool {
     }
 
     public void mouseDrag(MouseEvent e, int x, int y) {
-        if (isUnit(x,y))
-            super.mouseDrag(e,x,y); }
+
+        super.mouseDrag(e,x,y); }
 
     public void mouseUp(MouseEvent e, int x, int y) {
 
-        if (isUnit(x,y)) {
-            super.mouseUp(e,x,y);
+        super.mouseUp(e,x,y);
 
-            // Turn pixel position to tile position
-            Position to = GfxConstants.getPositionFromXY(x,y);
-            game.moveUnit(from,to);
-        }
+        // Turn pixel position to tile position
+        Position to = GfxConstants.getPositionFromXY(x,y);
+        game.moveUnit(from,to);
+
     }
 }
