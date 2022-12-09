@@ -1,7 +1,8 @@
-package hotciv.view;
+package hotciv.view.tool;
 
 import hotciv.framework.Game;
 import hotciv.framework.Position;
+import hotciv.view.GfxConstants;
 import minidraw.framework.DrawingEditor;
 import minidraw.standard.NullTool;
 
