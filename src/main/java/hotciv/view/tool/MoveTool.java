@@ -3,15 +3,9 @@ package hotciv.view.tool;
 import hotciv.framework.Game;
 import hotciv.framework.Position;
 import hotciv.view.GfxConstants;
-import minidraw.framework.Drawing;
 import minidraw.framework.DrawingEditor;
-import minidraw.framework.Figure;
-import minidraw.framework.Tool;
-import minidraw.standard.NullTool;
 import minidraw.standard.SelectionTool;
-import minidraw.standard.handlers.DragTracker;
 
-import java.awt.*;
 import java.awt.event.MouseEvent;
 
 public class MoveTool extends SelectionTool {
