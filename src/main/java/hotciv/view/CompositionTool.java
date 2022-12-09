@@ -18,7 +18,6 @@ public class CompositionTool extends NullTool {
   private EndOfTurnTool endOfTurnTool;
   private SetFocusTool setFocusTool;
   private MoveTool moveTool;
-  private Position from;
   private boolean dragging = false;
 
   public CompositionTool(DrawingEditor editor, Game game)
@@ -53,17 +52,10 @@ public class CompositionTool extends NullTool {
       }
       else
       {
-        // Call SetFocusTool
-        System.out.println("SetFocusTool called for Unit");
+        // Call moveTool
+        System.out.println("MoveTool called for Unit");
         moveTool.mouseDown(e,x,y);
-        from = p;
       }
-    }
-    else if(game.getCityAt(p) != null)
-    {
-      // Call SetFocusTool
-      System.out.println("SetFocusTool called for City");
-      setFocusTool.mouseUp(e,x,y);
     }
   }
 
@@ -77,7 +69,7 @@ public class CompositionTool extends NullTool {
   {
     Position p = GfxConstants.getPositionFromXY(x, y);
 
-    if(dragging == true)
+    if(dragging)
     {
       moveTool.mouseUp(e,x,y);
       dragging = false;
@@ -87,6 +79,11 @@ public class CompositionTool extends NullTool {
     {
       // Call SetFocusTool
       System.out.println("SetFocusTool called for Unit");
+      setFocusTool.mouseUp(e,x,y);
+    }
+    else if(game.getCityAt(p) != null)
+    {
+      System.out.println("SetFocusTool called for City");
       setFocusTool.mouseUp(e,x,y);
     }
   }
