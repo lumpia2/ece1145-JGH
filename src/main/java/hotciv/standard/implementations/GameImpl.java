@@ -78,8 +78,8 @@ public class GameImpl implements Game {
 
   public boolean moveUnit( Position from, Position to ) {
           if (moveUnitStrategy.moveUnit(from, to, this)) {
-            observer.worldChangedAt(from);
-            observer.worldChangedAt(to);
+            //observer.worldChangedAt(from);
+            //observer.worldChangedAt(to);
             return true;
           } else {
             return false;

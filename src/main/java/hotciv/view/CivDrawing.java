@@ -97,7 +97,7 @@ public class CivDrawing
 
     // remove all unit figures in this drawing
     removeAllUnitFigures();
-
+    System.out.println("All Removed");
     // iterate world, and create a unit figure for
     // each unit in the game world, as well as
     // create an association between the unit and
@@ -185,8 +185,8 @@ public class CivDrawing
   protected ImageFigure unitShield;
   protected ImageFigure cityShield;
   protected TextFigure moveText;
-  protected TextFigure produceText;
-  protected TextFigure balanceText;
+  protected ImageFigure produce;
+  protected ImageFigure balance;
 
   protected void defineIcons() {
     // TODO: Further development to include rest of figures needed
@@ -198,19 +198,19 @@ public class CivDrawing
     // rendering.
     ageText = new TextFigure(Integer.toString(game.getAge()), new Point(GfxConstants.AGE_TEXT_X, GfxConstants.AGE_TEXT_Y));
     moveText = new TextFigure("", new Point(GfxConstants.UNIT_COUNT_X, GfxConstants.UNIT_COUNT_Y));
-    produceText = new TextFigure("", new Point(GfxConstants.WORKFORCEFOCUS_X, GfxConstants.WORKFORCEFOCUS_Y));
-    balanceText = new TextFigure("", new Point(GfxConstants.CITY_PRODUCTION_X, GfxConstants.CITY_PRODUCTION_Y));
 
     unitShield = new ImageFigure(GfxConstants.NOTHING, new Point(GfxConstants.UNIT_SHIELD_X, GfxConstants.UNIT_SHIELD_Y));
     cityShield = new ImageFigure(GfxConstants.NOTHING, new Point(GfxConstants.CITY_SHIELD_X, GfxConstants.CITY_SHIELD_Y));
+    produce = new ImageFigure(GfxConstants.NOTHING, new Point(GfxConstants.CITY_PRODUCTION_X, GfxConstants.CITY_PRODUCTION_Y));
+    balance = new ImageFigure(GfxConstants.NOTHING, new Point(GfxConstants.WORKFORCEFOCUS_X, GfxConstants.WORKFORCEFOCUS_Y));
 
     delegate.add(turnShieldIcon);
     delegate.add(ageText);
     delegate.add(moveText);
     delegate.add(unitShield);
     delegate.add(cityShield);
-    delegate.add(produceText);
-    delegate.add(balanceText);
+    delegate.add(produce);
+    delegate.add(balance);
   }
  
   // === Observer Methods ===
@@ -230,6 +230,7 @@ public class CivDrawing
                                    GfxConstants.TURN_SHIELD_Y ) );
     // TODO: Age output pending
     ageText.setText(Integer.toString(age));
+    defineUnitMap();
   }
 
   public void tileFocusChangedAt(Position position) {
@@ -260,8 +261,9 @@ public class CivDrawing
         cityShield.set(GfxConstants.BLUE_SHIELD, new Point(GfxConstants.CITY_SHIELD_X, GfxConstants.CITY_SHIELD_Y));
       }
 
-      balanceText.setText(Integer.toString(city.getTreasury()));
-      produceText.setText(city.getWorkforceFocus()!=null ?  city.getWorkforceFocus(): "");
+      produce.set(city.getProduction(), new Point(GfxConstants.CITY_PRODUCTION_X, GfxConstants.CITY_PRODUCTION_Y));
+      balance.set(city.getWorkforceFocus(), new Point(GfxConstants.WORKFORCEFOCUS_X, GfxConstants.WORKFORCEFOCUS_Y));
+
     }
   }
 
@@ -272,7 +274,7 @@ public class CivDrawing
     // entire Drawing.
     defineUnitMap();
     defineCityMap();
-    defineIcons();
+//    defineIcons();
   }
 
   @Override

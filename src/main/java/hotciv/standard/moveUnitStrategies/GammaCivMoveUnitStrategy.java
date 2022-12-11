@@ -63,9 +63,9 @@ public class GammaCivMoveUnitStrategy implements MoveUnitStrategy {
         if(game.getUnitAt(to) == null)
         {
             Unit fromUnit = game.getUnitAt(from);
+            game.removeFromWorld(from, fromUnit);
             game.addToWorld(to, fromUnit);
             ((UnitImpl) fromUnit).decreaseMoveCount();
-            game.removeFromWorld(from, fromUnit);
             return true;
         }
 
@@ -75,9 +75,9 @@ public class GammaCivMoveUnitStrategy implements MoveUnitStrategy {
             Unit toUnit = game.getUnitAt(to);
             Unit fromUnit = game.getUnitAt(from);
             game.removeFromWorld(to, toUnit);
+            game.removeFromWorld(from, fromUnit);
             game.addToWorld(to, fromUnit);
             ((UnitImpl) fromUnit).decreaseMoveCount();
-            game.removeFromWorld(from, fromUnit);
             return true;
         }
 
