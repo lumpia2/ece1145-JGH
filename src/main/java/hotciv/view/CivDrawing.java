@@ -216,8 +216,8 @@ public class CivDrawing
   // === Observer Methods ===
 
   public void worldChangedAt(Position pos) {
-    defineUnitMap();
     defineCityMap();
+    defineUnitMap();
   }
 
   public void turnEnds(Player nextPlayer, int age) {
@@ -272,9 +272,9 @@ public class CivDrawing
     // A request has been issued to repaint
     // everything. We simply rebuild the
     // entire Drawing.
-    defineUnitMap();
     defineCityMap();
-//    defineIcons();
+    defineUnitMap();
+    defineIcons();
   }
 
   @Override
