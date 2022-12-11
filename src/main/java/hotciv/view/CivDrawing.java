@@ -3,12 +3,14 @@ package hotciv.view;
 import hotciv.framework.*;
 import minidraw.framework.*;
 import minidraw.standard.*;
+import org.w3c.dom.Text;
 
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.io.*;
 
 /** CivDrawing is a specialized Drawing (model component) from
  * MiniDraw that dynamically builds the list of Figures for MiniDraw
@@ -95,7 +97,7 @@ public class CivDrawing
 
     // remove all unit figures in this drawing
     removeAllUnitFigures();
-
+    System.out.println("All Removed");
     // iterate world, and create a unit figure for
     // each unit in the game world, as well as
     // create an association between the unit and
@@ -179,6 +181,13 @@ public class CivDrawing
   }
 
   protected ImageFigure turnShieldIcon;
+  protected TextFigure ageText;
+  protected ImageFigure unitShield;
+  protected ImageFigure cityShield;
+  protected TextFigure moveText;
+  protected ImageFigure produce;
+  protected ImageFigure balance;
+
   protected void defineIcons() {
     // TODO: Further development to include rest of figures needed
     turnShieldIcon = 
@@ -187,7 +196,21 @@ public class CivDrawing
                                   GfxConstants.TURN_SHIELD_Y ) ); 
     // insert in delegate figure list to ensure graphical
     // rendering.
+    ageText = new TextFigure(Integer.toString(game.getAge()), new Point(GfxConstants.AGE_TEXT_X, GfxConstants.AGE_TEXT_Y));
+    moveText = new TextFigure("", new Point(GfxConstants.UNIT_COUNT_X, GfxConstants.UNIT_COUNT_Y));
+
+    unitShield = new ImageFigure(GfxConstants.NOTHING, new Point(GfxConstants.UNIT_SHIELD_X, GfxConstants.UNIT_SHIELD_Y));
+    cityShield = new ImageFigure(GfxConstants.NOTHING, new Point(GfxConstants.CITY_SHIELD_X, GfxConstants.CITY_SHIELD_Y));
+    produce = new ImageFigure(GfxConstants.NOTHING, new Point(GfxConstants.CITY_PRODUCTION_X, GfxConstants.CITY_PRODUCTION_Y));
+    balance = new ImageFigure(GfxConstants.NOTHING, new Point(GfxConstants.WORKFORCEFOCUS_X, GfxConstants.WORKFORCEFOCUS_Y));
+
     delegate.add(turnShieldIcon);
+    delegate.add(ageText);
+    delegate.add(moveText);
+    delegate.add(unitShield);
+    delegate.add(cityShield);
+    delegate.add(produce);
+    delegate.add(balance);
   }
  
   // === Observer Methods ===
@@ -206,11 +229,42 @@ public class CivDrawing
                         new Point( GfxConstants.TURN_SHIELD_X,
                                    GfxConstants.TURN_SHIELD_Y ) );
     // TODO: Age output pending
+    ageText.setText(Integer.toString(age));
+    defineUnitMap();
   }
 
   public void tileFocusChangedAt(Position position) {
-    game.setTileFocus(position);
-    System.out.println( "Fake it: tileFocusChangedAt "+position );
+    Unit unit = game.getUnitAt(position);
+    City city = game.getCityAt(position);
+
+    if(unit != null)
+    {
+      if(unit.getOwner() == Player.RED)
+      {
+        unitShield.set(GfxConstants.RED_SHIELD, new Point(GfxConstants.UNIT_SHIELD_X, GfxConstants.UNIT_SHIELD_Y));
+      }
+      else
+      {
+        unitShield.set(GfxConstants.BLUE_SHIELD, new Point(GfxConstants.UNIT_SHIELD_X, GfxConstants.UNIT_SHIELD_Y));
+      }
+
+      moveText.setText(Integer.toString(unit.getMoveCount()));
+    }
+    if(city != null)
+    {
+      if(city.getOwner() == Player.RED)
+      {
+        cityShield.set(GfxConstants.RED_SHIELD, new Point(GfxConstants.CITY_SHIELD_X, GfxConstants.CITY_SHIELD_Y));
+      }
+      else
+      {
+        cityShield.set(GfxConstants.BLUE_SHIELD, new Point(GfxConstants.CITY_SHIELD_X, GfxConstants.CITY_SHIELD_Y));
+      }
+
+      produce.set(city.getProduction(), new Point(GfxConstants.CITY_PRODUCTION_X, GfxConstants.CITY_PRODUCTION_Y));
+      balance.set(city.getWorkforceFocus(), new Point(GfxConstants.WORKFORCEFOCUS_X, GfxConstants.WORKFORCEFOCUS_Y));
+
+    }
   }
 
   @Override
@@ -220,7 +274,7 @@ public class CivDrawing
     // entire Drawing.
     defineUnitMap();
     defineCityMap();
-    defineIcons();
+//    defineIcons();
   }
 
   @Override

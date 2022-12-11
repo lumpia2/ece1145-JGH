@@ -35,7 +35,8 @@ public class ShowComposition {
       new MiniDrawApplication( "Click and/or drag any item to see all game actions",  
                                new HotCivFactory4(game) );
 
-    GameObserver gameObserver = new CivDrawing(editor,game);
+//    GameObserver gameObserver = new CivDrawing(editor, game);
+//    game.addObserver(gameObserver);
 
     editor.open();
     editor.showStatus("Click and drag any item to see Game's proper response.");

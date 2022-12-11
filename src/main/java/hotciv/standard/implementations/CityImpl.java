@@ -16,6 +16,8 @@ public class CityImpl implements City {
     public CityImpl(Player owner) {
         this.owner = owner;
         this.population = 1;
+        workForceFocus = GameConstants.foodFocus;
+        production = GameConstants.ARCHER;
     }
     // Member functions
     @Override

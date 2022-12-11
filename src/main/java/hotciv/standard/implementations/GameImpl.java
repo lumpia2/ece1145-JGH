@@ -78,8 +78,8 @@ public class GameImpl implements Game {
 
   public boolean moveUnit( Position from, Position to ) {
           if (moveUnitStrategy.moveUnit(from, to, this)) {
-            observer.worldChangedAt(from);
-            observer.worldChangedAt(to);
+            //observer.worldChangedAt(from);
+            //observer.worldChangedAt(to);
             return true;
           } else {
             return false;
@@ -88,7 +88,7 @@ public class GameImpl implements Game {
   public void endOfTurn() {
     if (currentPlayer == Player.RED) {
       currentPlayer = Player.BLUE;
-      observer.turnEnds(Player.RED, this.age);
+      observer.turnEnds(Player.BLUE, this.age);
     }
     else if (currentPlayer == Player.BLUE) {
       currentPlayer = Player.RED;
@@ -97,7 +97,7 @@ public class GameImpl implements Game {
 
       this.updateCities();
       this.resetMoveCounts();
-      observer.turnEnds(Player.BLUE, this.age);
+      observer.turnEnds(Player.RED, this.age);
     }
   }
 
