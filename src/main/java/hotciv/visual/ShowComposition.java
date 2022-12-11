@@ -1,7 +1,11 @@
 package hotciv.visual;
 
 import hotciv.framework.Game;
+import hotciv.framework.GameObserver;
+import hotciv.standard.factories.SemiCivFactory;
+import hotciv.standard.implementations.GameImpl;
 import hotciv.stub.StubGame2;
+import hotciv.view.CivDrawing;
 import hotciv.view.CompositionTool;
 import minidraw.framework.*;
 import minidraw.standard.*;
@@ -25,11 +29,14 @@ import minidraw.standard.*;
 public class ShowComposition {
   
   public static void main(String[] args) {
-    Game game = new StubGame2();
+    Game game = new GameImpl(new SemiCivFactory());
 
     DrawingEditor editor = 
       new MiniDrawApplication( "Click and/or drag any item to see all game actions",  
                                new HotCivFactory4(game) );
+
+    GameObserver gameObserver = new CivDrawing(editor,game);
+
     editor.open();
     editor.showStatus("Click and drag any item to see Game's proper response.");
 
