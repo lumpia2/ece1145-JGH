@@ -19,7 +19,7 @@ public class SetFocusTool extends NullTool {
     }
 
     public boolean isUnit(int x, int y) {
-        Position from = GfxConstants.getPositionFromXY(x,y);
+        from = GfxConstants.getPositionFromXY(x,y);
 
         if (game.getUnitAt(from) != null)
             return true;

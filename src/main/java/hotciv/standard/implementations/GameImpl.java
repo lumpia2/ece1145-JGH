@@ -88,7 +88,7 @@ public class GameImpl implements Game {
   public void endOfTurn() {
     if (currentPlayer == Player.RED) {
       currentPlayer = Player.BLUE;
-      observer.turnEnds(Player.RED, this.age);
+      observer.turnEnds(Player.BLUE, this.age);
     }
     else if (currentPlayer == Player.BLUE) {
       currentPlayer = Player.RED;
@@ -97,7 +97,7 @@ public class GameImpl implements Game {
 
       this.updateCities();
       this.resetMoveCounts();
-      observer.turnEnds(Player.BLUE, this.age);
+      observer.turnEnds(Player.RED, this.age);
     }
   }
 
